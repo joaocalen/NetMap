@@ -11,17 +11,16 @@
 typedef struct Roteador roteador;
 
 
-/*Tipo que define a Pilha (tipo opaco)
-  Atencao: Esta pilha pode conter ate 10 Roteadors
+/*Tipo que define a Pilha (tipo opaco) 
 */
 typedef struct pilha Pilha;
 
 
 /*Inicializa a Pilha
 * inputs: nenhum
-* output: P (a pilha criada)
+* output: Pilha criada
 * pre-condicao: nenhuma
-* pos-condicao: P est� definida e vazia
+* pos-condicao: Pilha está definida e vazia
 */
 Pilha* cria_pilha();
 
