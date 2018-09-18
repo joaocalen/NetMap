@@ -49,6 +49,7 @@ void insere(Terminal* terminal, TipoLista* lista) {
     lista -> prim = celulaTerminal;
 }
 
+// retira o terminal da lista, mas não o destroi.
 Terminal* retira(TipoLista* lista, Terminal* remTerminal) {
     //Celula* terminalCel = (Celula*) malloc(sizeof (Celula));
     //terminalCel -> terminal -> mat = mat;
@@ -57,13 +58,22 @@ Terminal* retira(TipoLista* lista, Terminal* remTerminal) {
     }
     Celula* aux;
     Celula* ant;
-
+    
+    if(lista -> prim -> prox == NULL){
+     ant = NULL;
+     aux = lista -> prim;
+    } else{
     ant = buscaTerminal(lista, remTerminal);
-
+   
+ }
+    if (aux == NULL){
+    printf("Elemento não encontrado");
+    return NULL; 
+} else if (aux == lista -> prim){
+    lista -> prim == NULL;
+    return aux;
+}
     ant -> prox = aux -> prox;
-    free(aux -> terminal -> localizacao);
-    free(aux -> terminal -> nome);
-    free(aux -> terminal);
     return aux -> terminal;
 }
 
@@ -78,6 +88,7 @@ Celula* buscaTerminal(Terminal* terminal, TipoLista* lista) {
     if (aux == NULL) {
         return NULL;
     }
+    return ant;
 }
 
 //TipoLista* libera(TipoLista* lista) {
@@ -105,7 +116,12 @@ Terminal* inicializaTerminal(char* nome, char* localizacao) {
 }
 
 Terminal* desconectaTerminal(Terminal* terminal) {
-    terminal ->
+//    terminal ->
+}
+
+Terminal* destroiTerminal(){
+   // alocar o Terminal, depois setar seu valor como sendo
+  // o retorno da função retira, depois dar free.
 }
 
 void imprime(TipoLista* lista) {
