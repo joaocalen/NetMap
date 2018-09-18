@@ -7,12 +7,11 @@
   - prox (ponteiro)
   - rot (ponteiro que aponta para o roteador caso esse esteja na lista de enlace).
   - verificado (boolean) - Indica se o nó já foi verificado na função de enviarPacotesDados
- * Olá Glória
  */
 typedef struct Roteador roteador;
 
 
-/*Tipo que define a Pilha (tipo opaco) 
+/*Tipo que define a Pilha (tipo opaco)
 */
 typedef struct pilha Pilha;
 
@@ -25,7 +24,7 @@ typedef struct pilha Pilha;
 */
 Pilha* cria_pilha();
 
-/*Insere uma roteador no topo da pilha (se houver espaco)
+/*Insere uma roteador no topo da pilha
 * inputs: P (uma pilha) e E (uma roteador)
 * output: nenhum
 * pre-condicao: P nao vazia e com espaco para o elemento.

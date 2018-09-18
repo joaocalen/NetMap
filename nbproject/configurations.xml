@@ -6,8 +6,6 @@
                    projectFiles="true">
       <itemPath>pilha.h</itemPath>
       <itemPath>simpleSemSentinela.h</itemPath>
-      <itemPath>simplesCirc.h</itemPath>
-      <itemPath>simplesComSentinela.h</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Arquivos de Código-Fonte"
@@ -52,10 +50,6 @@
       </item>
       <item path="simpleSemSentinela.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="simplesCirc.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="simplesComSentinela.h" ex="false" tool="3" flavor2="0">
-      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
@@ -86,10 +80,6 @@
       <item path="pilha.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="simpleSemSentinela.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="simplesCirc.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="simplesComSentinela.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>
