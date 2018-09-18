@@ -1,16 +1,18 @@
 #ifndef PILHA_H_
 #define PILHA_H_
 
-/*TipoItem Pessoa (tipo opaco). Contem campos:
+/* Define a estrutura Roteador. Contem campos:
   - nome (string)
-  - idade (int)
-  - endereco (string)
-  */
-typedef struct pessoa Pessoa;
+  - operadora (string)
+  - prox (ponteiro)
+  - rot (ponteiro que aponta para o roteador caso esse esteja na lista de enlace).
+  - verificado (boolean) - Indica se o nÃ³ jÃ¡ foi verificado na funÃ§Ã£o de enviarPacotesDados
+ */
+typedef struct Roteador roteador;
 
 
 /*Tipo que define a Pilha (tipo opaco)
-  Atencao: Esta pilha pode conter ate 10 Pessoas
+  Atencao: Esta pilha pode conter ate 10 Roteadors
 */
 typedef struct pilha Pilha;
 
@@ -19,33 +21,33 @@ typedef struct pilha Pilha;
 * inputs: nenhum
 * output: P (a pilha criada)
 * pre-condicao: nenhuma
-* pos-condicao: P está definida e vazia
+* pos-condicao: P estï¿½ definida e vazia
 */
 Pilha* cria_pilha();
 
-/*Insere uma pessoa no topo da pilha (se houver espaco)
-* inputs: P (uma pilha) e E (uma pessoa)
+/*Insere uma roteador no topo da pilha (se houver espaco)
+* inputs: P (uma pilha) e E (uma roteador)
 * output: nenhum
 * pre-condicao: P nao vazia e com espaco para o elemento.
-* pos-condicao: Ao final da função, a pilha tem E como o elemento
+* pos-condicao: Ao final da funï¿½ï¿½o, a pilha tem E como o elemento
 do topo
 */
-void push(Pessoa* pessoa, Pilha* pilha);
+void push(Roteador* roteador, Pilha* pilha);
 
 
-/*Retira uma Pessoa do topo da Pilha (se pilha não vazia)
+/*Retira uma Roteador do topo da Pilha (se pilha nï¿½o vazia)
 * inputs: a Pilha
-* output: a pessoa retirada do topo da pilha
-* pre-condicao: Pilha não é nula e não é vazia
-* pos-condicao: pilha não contém o elemento retirado do topo
+* output: a roteador retirada do topo da pilha
+* pre-condicao: Pilha nï¿½o ï¿½ nula e nï¿½o ï¿½ vazia
+* pos-condicao: pilha nï¿½o contï¿½m o elemento retirado do topo
 */
-Pessoa* pop(Pilha* pilha);
+Roteador* pop(Pilha* pilha);
 
 
-/*Imprime as pessoas da pilha
+/*Imprime as roteadors da pilha
  * inputs: a pilha
  * output: nenhum
- * pre-condicao: pilha P não vazia
+ * pre-condicao: pilha P nï¿½o vazia
  * pos-condicao: Pilha permanece inalterada
  */
 void imprime_pilha (Pilha* pilha);
@@ -54,19 +56,19 @@ void imprime_pilha (Pilha* pilha);
 /*Libera a memoria ocupada pela pilha
 * inputs: a Pilha
 * output: NULL
-* pre-condicao: Pilha não é nula
+* pre-condicao: Pilha nï¿½o ï¿½ nula
 * pos-condicao: Toda memoria eh liberada
 */
 Pilha* destroi_pilha(Pilha* pilha);
 
 
-/*Inicializa um TipoItem Pessoa
-* inputs: o nome, a idade e o endereco da pessoa
+/*Inicializa um TipoItem Roteador
+* inputs: o nome, a idade e o endereco da roteador
 * output: um ponteiro para o tipo item criado
 * pre-condicao: nome, idade e endereco validos
 * pos-condicao: tipo item criado, com os campos nome, idade e endereco copiados
 */
-Pessoa* inicializaPessoa(char* nome, int idade, char* endereco);
+Roteador* inicializaRoteador(char* nome, int idade, char* endereco);
 
 
 #endif /* PILHA_H_ */
