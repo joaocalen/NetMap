@@ -7,6 +7,7 @@
   - prox (ponteiro)
   - rot (ponteiro que aponta para o roteador caso esse esteja na lista de enlace).
   - verificado (boolean) - Indica se o nó já foi verificado na função de enviarPacotesDados
+ * Olá Glória
  */
 typedef struct Roteador roteador;
 
