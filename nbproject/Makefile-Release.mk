@@ -36,6 +36,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/caminho.o \
+	${OBJECTDIR}/fila.o \
+	${OBJECTDIR}/leitorArquivo.o \
 	${OBJECTDIR}/listaTerminal.o \
 	${OBJECTDIR}/main.o
 
@@ -68,6 +70,16 @@ ${OBJECTDIR}/caminho.o: caminho.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/caminho.o caminho.c
+
+${OBJECTDIR}/fila.o: fila.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/fila.o fila.c
+
+${OBJECTDIR}/leitorArquivo.o: leitorArquivo.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/leitorArquivo.o leitorArquivo.c
 
 ${OBJECTDIR}/listaTerminal.o: listaTerminal.c
 	${MKDIR} -p ${OBJECTDIR}

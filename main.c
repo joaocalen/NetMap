@@ -13,12 +13,21 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "leitorArquivo.h"
+#include <stdbool.h>
 
 /*
  * 
  */
 int main(int argc, char** argv) {
-
+    
     return (EXIT_SUCCESS);
 }
+
+bool selecionarOperacao(int opcao){
+    switch (opcao){
+        
+    }
+}
+
 

@@ -50,6 +50,7 @@ void insere(Terminal* terminal, TipoLista* lista) {
 }
 
 // retira o terminal da lista, mas não o destroi.
+
 Terminal* retira(TipoLista* lista, Terminal* remTerminal) {
     //Celula* terminalCel = (Celula*) malloc(sizeof (Celula));
     //terminalCel -> terminal -> mat = mat;
@@ -58,21 +59,20 @@ Terminal* retira(TipoLista* lista, Terminal* remTerminal) {
     }
     Celula* aux;
     Celula* ant;
-    
-    if(lista -> prim -> prox == NULL){
-     ant = NULL;
-     aux = lista -> prim;
-    } else{
-    ant = buscaTerminal(lista, remTerminal);
-   
- }
-    if (aux == NULL){
-    printf("Elemento não encontrado");
-    return NULL; 
-} else if (aux == lista -> prim){
-    lista -> prim == NULL;
-    return aux;
-}
+
+    if (lista -> prim -> prox == NULL) {
+        ant = NULL;
+        aux = lista -> prim;
+    } else {
+        ant = buscaTerminal(lista, remTerminal);
+    }
+    if (aux == NULL) {
+        printf("Elemento não encontrado");
+        return NULL;
+    } else if (aux == lista -> prim) {
+        lista -> prim == NULL;
+        return aux;
+    }
     ant -> prox = aux -> prox;
     return aux -> terminal;
 }
@@ -81,7 +81,7 @@ Celula* buscaTerminal(Terminal* terminal, TipoLista* lista) {
     Celula* aux;
     Celula* ant;
     aux = lista -> prim;
-    while ((aux -> terminal -> nome != terminal ->nome) && (aux -> terminal -> localizacao != terminal -> localizacao) && (aux != NULL)) {
+    while ((aux -> terminal -> nome != terminal ->nome) && (aux != NULL)) {
         ant = aux;
         aux = aux -> prox;
     }
@@ -116,33 +116,24 @@ Terminal* inicializaTerminal(char* nome, char* localizacao) {
 }
 
 Terminal* desconectaTerminal(Terminal* terminal) {
-//    terminal ->
+    buscaTerminal(terminal) -> roteador = NULL;
 }
 
-Terminal* destroiTerminal(){
-   // alocar o Terminal, depois setar seu valor como sendo
-  // o retorno da função retira, depois dar free.
+void destroiTerminal(Terminal* terminal) {
+    free(terminal -> localizacao);
+    free(terminal -> nome);
+    free(terminal);
 }
 
-void imprime(TipoLista* lista) {
-    Celula* p = lista -> prim;
-    while (p != NULL) {
-        printf("Terminal de matrícula %d \n", p->terminal->mat);
-        printf("Nome: %s \n", p->terminal->nome);
-        printf("Endereco: %s \n", p->terminal->localizacao);
-        printf("\n\n");
-    }
-}
+//void imprime(TipoLista* lista) {
+//    Celula* p = lista -> prim;
+//    while (p != NULL) {
+//        printf("Terminal de matrícula %d \n", p->terminal->mat);
+//        printf("Nome: %s \n", p->terminal->nome);
+//        printf("Endereco: %s \n", p->terminal->localizacao);
+//        printf("\n\n");
+//    }
+//}
 
 // criar outro arquivo para essas funções
 
-TipoLista* insereSemSentinela(TipoLista* lista, Terminal* item) {
-    //    TipoLista* nova;
-    //    nova -> item = item;
-    //    nova -> prox = l;
-    //    return nova;
-}
-
-TipoLista* retiraSemSentinela(TipoLista* lista, int mat) {
-
-}
