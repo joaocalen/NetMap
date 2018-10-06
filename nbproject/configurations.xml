@@ -4,28 +4,36 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Arquivos de Cabeçalho"
                    projectFiles="true">
+      <itemPath>Enlace.h</itemPath>
+      <itemPath>Roteador.h</itemPath>
+      <itemPath>Terminal.h</itemPath>
       <itemPath>fila.h</itemPath>
       <itemPath>leitorArquivo.h</itemPath>
+      <itemPath>lista.h</itemPath>
       <itemPath>pilha.h</itemPath>
-      <itemPath>simplesComSentinela.h</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Arquivos de Código-Fonte"
                    projectFiles="true">
+      <itemPath>Enlace.c</itemPath>
+      <itemPath>Roteador.c</itemPath>
+      <itemPath>Terminal.c</itemPath>
       <itemPath>caminho.c</itemPath>
       <itemPath>fila.c</itemPath>
       <itemPath>leitorArquivo.c</itemPath>
-      <itemPath>listaTerminal.c</itemPath>
       <itemPath>main.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Arquivos de Recurso"
                    projectFiles="true">
+      <itemPath>anotacoes.txt</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Arquivos de Teste"
                    projectFiles="false"
                    kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f1" displayName="teste" projectFiles="true" kind="TEST">
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Arquivos Importantes"
@@ -44,8 +52,37 @@
       </toolsSet>
       <compileType>
       </compileType>
+      <item path="Enlace.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Enlace.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Roteador.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Roteador.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Terminal.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Terminal.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="anotacoes.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="caminho.c" ex="false" tool="0" flavor2="0">
       </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
       <item path="fila.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="fila.h" ex="false" tool="3" flavor2="0">
@@ -54,13 +91,11 @@
       </item>
       <item path="leitorArquivo.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="listaTerminal.c" ex="false" tool="0" flavor2="0">
+      <item path="lista.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="pilha.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="simplesComSentinela.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -83,8 +118,37 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Enlace.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Enlace.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Roteador.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Roteador.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Terminal.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Terminal.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="anotacoes.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="caminho.c" ex="false" tool="0" flavor2="0">
       </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
       <item path="fila.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="fila.h" ex="false" tool="3" flavor2="0">
@@ -93,13 +157,11 @@
       </item>
       <item path="leitorArquivo.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="listaTerminal.c" ex="false" tool="0" flavor2="0">
+      <item path="lista.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="pilha.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="simplesComSentinela.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

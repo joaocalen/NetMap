@@ -1,0 +1,7 @@
+Feito (base):
+Cadastra Terminal
+Desconecta Terminal
+Conecta Terminal
+Remove Terminal
+Cadastra Roteador
+Remove Roteador
