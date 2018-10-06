@@ -54,7 +54,7 @@ Roteador* retiraRoteador(ListaRoteadores* lista, char* nome) {
         return NULL;
     } else if (ant == NULL) {
         aux = lista -> prim;
-        lista -> prim = NULL;
+        lista -> prim = lista -> prim -> prox;
     } else if (ant -> prox == NULL) {
         return NULL;
     } else {
@@ -79,15 +79,20 @@ CelulaRoteador* buscaRoteadorAnterior(char* nome, ListaRoteadores* lista) {
 }
 
 ListaRoteadores* liberaRoteadores(ListaRoteadores* lista) {
-    CelulaRoteador* p = lista -> prim;
-    CelulaRoteador* aux;
-    while (p != NULL) {
-        aux = p->prox;
-        destroiRoteador(p->roteador);
-        free(p);
-        p = aux;
+    if (lista != NULL) {
+        CelulaRoteador* p = lista -> prim;
+        CelulaRoteador* aux;
+
+        while (p != NULL) {
+            aux = p->prox;
+            printf("\nTESTE1\n");
+            destroiRoteador(p->roteador);
+            printf("\nTESTE2\n");
+            free(p);
+            p = aux;
+        }
+        free(lista);
     }
-    free(lista);
     return NULL;
 }
 
@@ -107,13 +112,13 @@ void destroiRoteador(Roteador* roteador) {
 }
 
 void imprimeRoteadores(ListaRoteadores* lista) {
-    CelulaRoteador* p = lista -> prim;
-    if (p == NULL) {
-        printf("NENHUM TERMINAL");
+    if (lista == NULL) {
+        printf("NENHUM Roteador \n");
     } else {
+        CelulaRoteador* p = lista -> prim;
         while (p != NULL) {
-            printf("Terminal: %s \n", p->roteador-> nome);
-            printf("Endereco: %s \n", p->roteador-> operadora);
+            printf("Roteador: %s \n", p->roteador-> nome);
+            printf("Operadora: %s \n", p->roteador-> operadora);
             printf("\n\n");
             p = p -> prox;
         }

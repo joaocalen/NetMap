@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
 
     printf("%s retirado\n", terminal3 -> nome);
 
-    printf("IMPRIMINDO TERMINAIS (sem o terceiro) :");
+    printf("IMPRIMINDO TERMINAIS (sem o terceiro) :\n ");
 
     imprimeTerminais(listaTerminais);
 
@@ -61,9 +61,12 @@ int main(int argc, char** argv) {
 
     printf("LIBERANDO TERMINAIS\n:");
     destroiTerminal(terminal3);
-    liberaTerminais(listaTerminais);
+    listaTerminais = liberaTerminais(listaTerminais);
 
     printf("TENTANDO IMPRIMIR TERMINAIS (nenhum):\n");
+    
+    imprimeTerminais(listaTerminais);
+    
 
     ListaRoteadores* listaRoteadores = inicializaListaRoteadores();
 
@@ -74,7 +77,7 @@ int main(int argc, char** argv) {
     Roteador* roteador5 = inicializaRoteador("Roteador 5", "NET");
 
     printf("ATÉ AQUI EU CHEGO SEU FILHO DA PUTA \n");
-    
+
     insereRoteador(roteador1, listaRoteadores);
     insereRoteador(roteador2, listaRoteadores);
     insereRoteador(roteador3, listaRoteadores);
@@ -84,15 +87,16 @@ int main(int argc, char** argv) {
     imprimeRoteadores(listaRoteadores);
 
     roteador5 = retiraRoteador(listaRoteadores, roteador5 -> nome);
-    printf("%s retirado\n", roteador5 -> nome);
-    
+    printf("%s retirado\n", roteador3 -> nome);
+
+
+    imprimeRoteadores(listaRoteadores);
+
+    printf("LIBERANDO Roteadores:\n");
+    destroiRoteador(roteador5);
+    listaRoteadores = liberaRoteadores(listaRoteadores);
     
     imprimeRoteadores(listaRoteadores);
-    
-    printf("LIBERANDO TERMINAIS\n:");
-    destroiRoteador(roteador3);
-    liberaRoteadores(listaRoteadores);
-
 
     return (EXIT_SUCCESS);
 }

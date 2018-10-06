@@ -114,10 +114,11 @@ void destroiTerminal(Terminal* terminal) {
 }
 
 void imprimeTerminais(ListaTerminais* lista) {
-    CelulaTerminal* p = lista -> prim;
-    if (p == NULL) {
+    
+    if (lista == NULL) {
         printf("NENHUM TERMINAL");
     } else {
+        CelulaTerminal* p = lista -> prim;
         while (p != NULL) {
             printf("Terminal: %s \n", p->terminal-> nome);
             printf("Endereco: %s \n", p->terminal->localizacao);
