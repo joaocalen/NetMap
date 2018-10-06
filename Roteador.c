@@ -21,20 +21,10 @@
 
 // subclasse de Item
 
-struct roteador {
-    char* nome;
-    char* operadora;
-};
-
 struct celulaRoteador {
     Roteador* roteador;
     CelulaRoteador* prox;
     CelulaEnlace* enlace;
-};
-
-struct listaRoteadores {
-    CelulaRoteador* prim;
-    int tam; // tam max para caminho em pilha
 };
 
 ListaRoteadores* inicializaListaRoteadores() {
@@ -47,48 +37,43 @@ ListaRoteadores* inicializaListaRoteadores() {
 
 void insereRoteador(Roteador* roteador, ListaRoteadores* lista) {
     CelulaRoteador* celulaRoteador = (CelulaRoteador*) malloc(sizeof (CelulaRoteador));
-    celulaRoteador -> roteador == roteador;
+    celulaRoteador -> roteador = roteador;
     celulaRoteador -> prox = lista -> prim;
     lista -> prim = celulaRoteador;
-    lista -> tam++;    
+    lista -> tam++;
 }
 
 // retira o roteador da lista, mas não o destroi.
 
 Roteador* retiraRoteador(ListaRoteadores* lista, char* nome) {
+    CelulaRoteador* aux;
+    CelulaRoteador* ant;
+
+    ant = buscaRoteadorAnterior(nome, lista);
     if (lista -> prim == NULL) {
         return NULL;
-    }
-    CelulaRoteador* aux = NULL;
-    CelulaRoteador* ant = NULL;
-
-    if (lista -> prim -> prox == NULL) {
-        ant = NULL;
-        if (lista -> prim -> roteador -> nome == nome) {
-            aux = lista -> prim;
-            lista -> prim = NULL;
-        }
+    } else if (ant == NULL) {
+        aux = lista -> prim;
+        lista -> prim = NULL;
+    } else if (ant -> prox == NULL) {
+        return NULL;
     } else {
-        ant = buscaRoteador(nome, lista, aux);
-    }
-    if (aux == NULL) {
-        printf("Elemento não encontrado");
-
-    } else {
+        aux = ant -> prox;
         ant -> prox = aux -> prox;
     }
-    return aux -> roteador;
+    Roteador* roteador = aux -> roteador;
+
+    free(aux);
+    return roteador;
 }
 
-CelulaRoteador* buscaRoteador(char* nome, ListaRoteadores* lista, CelulaRoteador* aux) {
-    CelulaRoteador* ant;
+CelulaRoteador* buscaRoteadorAnterior(char* nome, ListaRoteadores* lista) {
+    CelulaRoteador* aux;
+    CelulaRoteador* ant = NULL;
     aux = lista -> prim;
     while ((aux -> roteador -> nome != nome) && (aux != NULL)) {
         ant = aux;
         aux = aux -> prox;
-    }
-    if (aux == NULL) {
-        return NULL;
     }
     return ant;
 }
@@ -98,9 +83,7 @@ ListaRoteadores* liberaRoteadores(ListaRoteadores* lista) {
     CelulaRoteador* aux;
     while (p != NULL) {
         aux = p->prox;
-        free(p->roteador->nome);
-        free(p->roteador->operadora);
-        free(p->roteador);
+        destroiRoteador(p->roteador);
         free(p);
         p = aux;
     }
@@ -125,10 +108,14 @@ void destroiRoteador(Roteador* roteador) {
 
 void imprimeRoteadores(ListaRoteadores* lista) {
     CelulaRoteador* p = lista -> prim;
-    while (p != NULL) {
-        printf("Roteador:  %s \n", p->roteador-> nome);
-        printf("Operadora: %s \n", p->roteador->operadora);
-        printf("\n\n");
-        p = p-> prox;
+    if (p == NULL) {
+        printf("NENHUM TERMINAL");
+    } else {
+        while (p != NULL) {
+            printf("Terminal: %s \n", p->roteador-> nome);
+            printf("Endereco: %s \n", p->roteador-> operadora);
+            printf("\n\n");
+            p = p -> prox;
+        }
     }
 }

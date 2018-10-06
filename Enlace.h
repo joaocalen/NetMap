@@ -24,6 +24,16 @@ extern "C" {
 
     typedef struct listaEnlaces ListaEnlaces;
 
+    struct celulaEnlace {
+        CelulaEnlace* prox;
+        CelulaRoteador* roteador;
+    };
+
+    struct listaEnlaces {
+        CelulaEnlace* prim;
+        CelulaEnlace* atual;
+    };
+
     /*Tipo que define a lista (tipo opaco)
       Estrutura interna do tipo deve ser definida na implementa��o do TAD.
       Usar lista COM Sentinela

@@ -19,15 +19,7 @@
 #include <stdlib.h>
 //using namespace std;
 
-struct celulaEnlace {
-    CelulaEnlace* prox;
-    CelulaRoteador* roteador;
-};
 
-struct listaEnlaces {
-    CelulaEnlace* prim;
-    CelulaEnlace* atual;
-};
 
 //ListaEnlaces* inicializaLista() {
 //    ListaEnlaces* lista;
@@ -38,7 +30,7 @@ struct listaEnlaces {
 //
 //void insereEnlace(Enlace* enlace, ListaEnlaces* lista) {
 //    CelulaEnlace* celulaEnlace = (CelulaEnlace*) malloc(sizeof (CelulaEnlace));
-//    celulaEnlace -> enlace == enlace;
+//    celulaEnlace -> enlace = enlace;
 //    celulaEnlace -> prox = lista -> prim;
 //    lista -> prim = celulaEnlace;
 //}

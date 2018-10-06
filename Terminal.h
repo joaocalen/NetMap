@@ -35,6 +35,18 @@ extern "C" {
      * pre-condicao: lista n�o � nula
      * pos-condicao: lista n�o cont�m o aluno de matr�cula mat
      */
+
+    struct terminal {
+        char* nome;
+        char* localizacao;
+    };
+
+    struct listaTerminais {
+        CelulaTerminal* prim;
+    };
+
+    
+
     Terminal* retiraTerminal(ListaTerminais* lista, char* nome);
 
     /*Libera toda a mem�ria alocada para a lista (lembre-se de tambem liberar a memoria para o aluno)
@@ -71,7 +83,7 @@ extern "C" {
 
     CelulaTerminal* buscaTerminalAnterior(char* nome, ListaTerminais* lista);
 
-    
+
 
     /*Inicializa um Terminal aluno
      * inputs: o nome, a matricula e o endereco do aluno
@@ -80,6 +92,8 @@ extern "C" {
      * pos-condicao: tipo item criado, com os campos nome, matricula e endereco copiados
      */
     Terminal * inicializaTerminal(char* nome, char* localizacao);
+    
+    void destroiTerminal(Terminal* terminal);
 
 
 #ifdef __cplusplus

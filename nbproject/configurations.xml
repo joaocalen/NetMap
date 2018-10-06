@@ -5,6 +5,7 @@
                    displayName="Arquivos de Cabeçalho"
                    projectFiles="true">
       <itemPath>Enlace.h</itemPath>
+      <itemPath>Erro.h</itemPath>
       <itemPath>Roteador.h</itemPath>
       <itemPath>Terminal.h</itemPath>
       <itemPath>fila.h</itemPath>
@@ -16,6 +17,7 @@
                    displayName="Arquivos de Código-Fonte"
                    projectFiles="true">
       <itemPath>Enlace.c</itemPath>
+      <itemPath>Erro.c</itemPath>
       <itemPath>Roteador.c</itemPath>
       <itemPath>Terminal.c</itemPath>
       <itemPath>caminho.c</itemPath>
@@ -55,6 +57,10 @@
       <item path="Enlace.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="Enlace.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Erro.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Erro.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Roteador.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -121,6 +127,10 @@
       <item path="Enlace.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="Enlace.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Erro.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Erro.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Roteador.c" ex="false" tool="0" flavor2="0">
       </item>

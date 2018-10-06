@@ -30,6 +30,19 @@ extern "C" {
       Estrutura interna do tipo deve ser definida na implementa��o do TAD.
       Usar lista COM Sentinela
      */
+    typedef struct celulaRoteador CelulaRoteador;
+
+    typedef struct listaRoteadores ListaRoteadores;
+
+    struct roteador {
+        char* nome;
+        char* operadora;
+    };
+
+    struct listaRoteadores {
+        CelulaRoteador* prim;
+        int tam; // tam max para caminho em pilha
+    };
 
     /*Inicializa um Terminal aluno
      * inputs: o nome, a matricula e o endereco do aluno
@@ -38,10 +51,6 @@ extern "C" {
      * pos-condicao: tipo item criado, com os campos nome, matricula e endereco copiados
      */
     Roteador* inicializaRoteador(char* nome, char* operadora);
-
-    typedef struct celulaRoteador CelulaRoteador;
-
-    typedef struct listaRoteadores ListaRoteadores;
 
     /*Retira um aluno de matr�cula mat da lista de alunos
      * inputs: a lista e a matr�cula do aluno a ser retirado da lista
@@ -83,7 +92,9 @@ extern "C" {
      */
     ListaRoteadores* inicializaListaRoteadores();
 
-    CelulaRoteador* buscaRoteador(char* nome, ListaRoteadores* lista, CelulaRoteador* aux);
+    CelulaRoteador* buscaRoteadorAnterior(char* nome, ListaRoteadores* lista);
+    
+    void destroiRoteador(Roteador* roteador);
 
 
 

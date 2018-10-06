@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Enlace.o \
+	${OBJECTDIR}/Erro.o \
 	${OBJECTDIR}/Roteador.o \
 	${OBJECTDIR}/Terminal.o \
 	${OBJECTDIR}/caminho.o \
@@ -81,6 +82,11 @@ ${OBJECTDIR}/Enlace.o: Enlace.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Enlace.o Enlace.c
+
+${OBJECTDIR}/Erro.o: Erro.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Erro.o Erro.c
 
 ${OBJECTDIR}/Roteador.o: Roteador.c
 	${MKDIR} -p ${OBJECTDIR}
@@ -135,6 +141,19 @@ ${OBJECTDIR}/Enlace_nomain.o: ${OBJECTDIR}/Enlace.o Enlace.c
 	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Enlace_nomain.o Enlace.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/Enlace.o ${OBJECTDIR}/Enlace_nomain.o;\
+	fi
+
+${OBJECTDIR}/Erro_nomain.o: ${OBJECTDIR}/Erro.o Erro.c 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/Erro.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Erro_nomain.o Erro.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/Erro.o ${OBJECTDIR}/Erro_nomain.o;\
 	fi
 
 ${OBJECTDIR}/Roteador_nomain.o: ${OBJECTDIR}/Roteador.o Roteador.c 

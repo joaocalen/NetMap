@@ -21,15 +21,6 @@
 
 void conectaTerminal(Terminal* terminal, CelulaRoteador* roteador, ListaTerminais* lista);
 
-struct terminal {
-    char* nome;
-    char* localizacao;
-};
-
-struct listaTerminais {
-    CelulaTerminal* prim;
-};
-
 struct celulaTerminal {
     Terminal* terminal;
     CelulaTerminal* prox;
@@ -53,40 +44,34 @@ void insereTerminal(Terminal* terminal, ListaTerminais* lista) {
 // retira o terminal da lista, mas não o destroi.
 
 Terminal* retiraTerminal(ListaTerminais* lista, char* nome) {
+    CelulaTerminal* aux;
+    CelulaTerminal* ant;
+
+    ant = buscaTerminalAnterior(nome, lista);
     if (lista -> prim == NULL) {
         return NULL;
-    }
-    CelulaTerminal* aux = NULL;
-    CelulaTerminal* ant = NULL;
-
-    if (lista -> prim -> prox == NULL) {
-        ant = NULL;
-        if (lista -> prim -> terminal -> nome == nome) {
-            aux = lista -> prim;
-            lista -> prim = NULL;
-        }
+    } else if (ant == NULL) {
+        aux = lista -> prim;
+        lista -> prim = lista -> prim -> prox;
+    } else if (ant -> prox == NULL) {
+        return NULL;
     } else {
-        ant = buscaTerminalAnterior(nome, lista);
-    }
-    if (aux == NULL) {
-        printf("Elemento não encontrado");
-
-    } else {
+        aux = ant -> prox;
         ant -> prox = aux -> prox;
     }
-    return aux -> terminal;
+    Terminal* terminal = aux -> terminal;
+
+    free(aux);
+    return terminal;
 }
 
 CelulaTerminal* buscaTerminalAnterior(char* nome, ListaTerminais* lista) {
     CelulaTerminal* aux;
-    CelulaTerminal* ant;
+    CelulaTerminal* ant = NULL;
     aux = lista -> prim;
     while ((aux -> terminal -> nome != nome) && (aux != NULL)) {
         ant = aux;
         aux = aux -> prox;
-    }
-    if (aux == NULL) {
-        return NULL;
     }
     return ant;
 }
@@ -99,9 +84,7 @@ ListaTerminais* liberaTerminais(ListaTerminais* lista) {
     CelulaTerminal* aux;
     while (p != NULL) {
         aux = p->prox;
-        free(p-> terminal -> nome);
-        free(p->terminal->localizacao);
-        free(p->terminal);
+        destroiTerminal(p->terminal);
         free(p);
         p = aux;
     }
