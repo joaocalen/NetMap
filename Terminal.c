@@ -80,15 +80,17 @@ CelulaTerminal* buscaTerminalAnterior(char* nome, ListaTerminais* lista) {
 // retira o terminal da lista, mas não o destroi.
 
 ListaTerminais* liberaTerminais(ListaTerminais* lista) {
-    CelulaTerminal* p = lista -> prim;
-    CelulaTerminal* aux;
-    while (p != NULL) {
-        aux = p->prox;
-        destroiTerminal(p->terminal);
-        free(p);
-        p = aux;
+    if (lista != NULL) {
+        CelulaTerminal* p = lista -> prim;
+        CelulaTerminal* aux;
+        while (p != NULL) {
+            aux = p->prox;
+            destroiTerminal(p->terminal);
+            free(p);
+            p = aux;
+        }
+        free(lista);
     }
-    free(lista);
     return NULL;
 }
 
@@ -108,13 +110,15 @@ void conectaTerminal(Terminal* terminal, CelulaRoteador* roteador, ListaTerminai
 }
 
 void destroiTerminal(Terminal* terminal) {
-    free(terminal -> localizacao);
-    free(terminal -> nome);
-    free(terminal);
+    if (terminal != NULL) {
+        free(terminal -> localizacao);
+        free(terminal -> nome);
+        free(terminal);
+    }
 }
 
 void imprimeTerminais(ListaTerminais* lista) {
-    
+
     if (lista == NULL) {
         printf("NENHUM TERMINAL");
     } else {

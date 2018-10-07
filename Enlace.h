@@ -14,7 +14,7 @@
 #ifndef ENLACE_H
 #define ENLACE_H
 
-#include "Roteador.h"
+//#include "Roteador.h"
 
 
 #ifdef __cplusplus
@@ -24,10 +24,6 @@ extern "C" {
 
     typedef struct listaEnlaces ListaEnlaces;
 
-    struct celulaEnlace {
-        CelulaEnlace* prox;
-        CelulaRoteador* roteador;
-    };
 
     struct listaEnlaces {
         CelulaEnlace* prim;
@@ -45,7 +41,7 @@ extern "C" {
      * pre-condicao: nome, matricula e endereco validos
      * pos-condicao: tipo item criado, com os campos nome, matricula e endereco copiados
      */
-    CelulaEnlace* inicializaEnlace(CelulaRoteador* roteador);
+    //CelulaEnlace* inicializaEnlace(CelulaRoteador* roteador);
 
 
 
@@ -63,7 +59,7 @@ extern "C" {
      * pre-condicao: lista n�o � nula
      * pos-condicao: mem�ria alocada � liberada
      */
-    ListaEnlaces* liberaEnlace(ListaEnlaces* lista);
+    ListaEnlaces* liberaEnlaces(ListaEnlaces* lista, void* roteador);
 
     /*Imprime os dados de todos os alunos da lista
      * inputs: a lista de alunos
@@ -79,7 +75,7 @@ extern "C" {
      * pre-condicao: aluno e lista n�o s�o nulos
      * pos-condicao: lista cont�m o aluno inserido na primeira posi��o
      */
-    void insereEnlace(CelulaEnlace* item, void* lista);
+    void insereEnlace(void* roteador, ListaEnlaces* lista);
 
     /*Inicializa o sentinela de uma lista
      * inputs: nenhum
@@ -89,7 +85,7 @@ extern "C" {
      */
     ListaEnlaces* inicializaListaEnlaces();
 
-    CelulaEnlace* buscaEnlace(Roteador* enlace, ListaEnlaces* lista);
+    CelulaEnlace* buscaEnlaceAnterior(char* nome, ListaEnlaces* lista);
 
 
 #ifdef __cplusplus

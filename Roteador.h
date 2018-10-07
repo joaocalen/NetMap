@@ -14,6 +14,9 @@
 #ifndef ROTEADOR_H
 #define ROTEADOR_H
 
+#include "Enlace.h"
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -37,11 +40,17 @@ extern "C" {
     struct roteador {
         char* nome;
         char* operadora;
+        ListaEnlaces* listaEnlaces;
     };
 
     struct listaRoteadores {
         CelulaRoteador* prim;
         int tam; // tam max para caminho em pilha
+    };
+
+    struct celulaRoteador {
+        Roteador* roteador;
+        CelulaRoteador* prox;
     };
 
     /*Inicializa um Terminal aluno
@@ -93,10 +102,12 @@ extern "C" {
     ListaRoteadores* inicializaListaRoteadores();
 
     CelulaRoteador* buscaRoteadorAnterior(char* nome, ListaRoteadores* lista);
-    
+
     void destroiRoteador(Roteador* roteador);
 
+    void conectaRoteadores(Roteador* roteador1, Roteador* roteador2, ListaRoteadores* lista);
 
+    void desconectaRoteadores(Roteador* roteador1, Roteador* roteador2);
 
 
 #ifdef __cplusplus

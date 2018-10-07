@@ -19,90 +19,93 @@
 #include <stdlib.h>
 //using namespace std;
 
+struct celulaEnlace {
+    CelulaEnlace* prox;
+    CelulaRoteador* roteador;
+};
 
+ListaEnlaces* inicializaListaEnlaces() {
+    ListaEnlaces* lista;
+    lista = (ListaEnlaces*) malloc(sizeof (ListaEnlaces));
+    lista -> prim = NULL;
+    lista -> atual = NULL;
+    return lista;
+}
 
-//ListaEnlaces* inicializaLista() {
-//    ListaEnlaces* lista;
-//    lista = (ListaEnlaces*) malloc(sizeof (ListaEnlaces));
-//    lista -> prim = NULL;
-//    return lista;
-//}
-//
-//void insereEnlace(Enlace* enlace, ListaEnlaces* lista) {
-//    CelulaEnlace* celulaEnlace = (CelulaEnlace*) malloc(sizeof (CelulaEnlace));
-//    celulaEnlace -> enlace = enlace;
-//    celulaEnlace -> prox = lista -> prim;
-//    lista -> prim = celulaEnlace;
-//}
-//
-//// retira o enlace da lista, mas não o destroi.
-//
-//Enlace* retira(ListaEnlaces* lista, Enlace* remEnlace) {
-//    //CelulaEnlace* enlaceCel = (CelulaEnlace*) malloc(sizeof (CelulaEnlace));
-//    //enlaceCel -> enlace -> mat = mat;
-//    if (lista -> prim == NULL) {
-//        return NULL;
-//    }
-//    CelulaEnlace* aux;
-//    CelulaEnlace* ant;
-//
-//    if (lista -> prim -> prox == NULL) {
-//        ant = NULL;
-//        aux = lista -> prim;
-//    } else {
-//        ant = buscaEnlace(lista, remEnlace);
-//    }
-//    if (aux == NULL) {
-//        printf("Elemento não encontrado");
-//        return NULL;
-//    } else if (aux == lista -> prim) {
-//        lista -> prim == NULL;
-//        return aux;
-//    }
-//    ant -> prox = aux -> prox;
-//    return aux -> enlace;
-//}
-//
-//CelulaEnlace* buscaEnlace(Enlace* enlace, ListaEnlaces* lista) {
-//    CelulaEnlace* aux;
-//    CelulaEnlace* ant;
-//    aux = lista -> prim;
-//    while ((aux -> enlace -> nome != enlace ->nome) && (aux != NULL)) {
-//        ant = aux;
-//        aux = aux -> prox;
-//    }
-//    if (aux == NULL) {
-//        return NULL;
-//    }
-//    return ant;
-//}
+void insereEnlace(void* roteador, ListaEnlaces* lista) {
+    printf("\nENTREI NA FUNÇÃO SEU LAZARENTO\n");
+    CelulaEnlace* celulaEnlace = (CelulaEnlace*) malloc(sizeof (CelulaEnlace));
+    celulaEnlace -> roteador = (CelulaRoteador*) roteador;
+    celulaEnlace -> prox = lista -> prim;
+    lista -> prim = celulaEnlace;
+    lista -> atual = lista -> prim;
+}
 
-//ListaEnlaces* libera(ListaEnlaces* lista) {
-//    CelulaEnlace* p = lista -> prim;
-//    CelulaEnlace* aux;
-//    while (p != NULL) {
-//        aux = p->prox;
-//        free(p->enlace->nome);
-//        free(p->enlace->localizacao);
-//        free(p->enlace);
-//        free(p);
-//        p = aux;
-//    }
-//    free(lista);
-//    return NULL;
-//}
+// retira o enlace da lista, mas não o destroi.
 
+CelulaEnlace* retiraEnlace(ListaEnlaces* lista, char* nome) {
+    CelulaEnlace* aux;
+    CelulaEnlace* ant;
 
+    ant = buscaEnlaceAnterior(nome, lista);
+    if (lista -> prim == NULL) {
+        return NULL;
+    } else if (ant == NULL) {
+        aux = lista -> prim;
+        lista -> prim = lista -> prim -> prox;
+    } else if (ant -> prox == NULL) {
+        return NULL;
+    } else {
+        aux = ant -> prox;
+        ant -> prox = aux -> prox;
+    }
+    CelulaEnlace* enlace = aux;
 
-//void imprime(ListaEnlaces* lista) {
-//    CelulaEnlace* p = lista -> prim;
-//    while (p != NULL) {
-//        printf("Enlace de matrícula %d \n", p->enlace->mat);
-//        printf("Nome: %s \n", p->enlace->nome);
-//        printf("Endereco: %s \n", p->enlace->localizacao);
-//        printf("\n\n");
-//    }
-//}
+    free(aux);
+    return enlace;
+}
 
-// criar outro arquivo para essas funções
+CelulaEnlace* buscaEnlaceAnterior(char* nome, ListaEnlaces* lista) {
+    CelulaEnlace* aux;
+    CelulaEnlace* ant;
+    aux = lista -> prim;
+    while ((aux -> roteador -> roteador -> nome != nome) && (aux != NULL)) {
+        ant = aux;
+        aux = aux -> prox;
+    }
+    if (aux == NULL) {
+        return NULL;
+    }
+    return ant;
+}
+
+ListaEnlaces* liberaEnlaces(ListaEnlaces* lista, void* rot) {
+    CelulaEnlace* p = lista -> prim;
+    CelulaEnlace* aux;
+    Roteador* roteador = (Roteador*) rot;
+    while (p != NULL) {
+        aux = p->prox;
+        desconectaRoteadores(roteador,p->roteador -> roteador);
+        free(p);
+        p = aux;
+    }
+    free(lista);
+    return NULL;
+}
+
+void imprimeEnlaces(ListaEnlaces* lista) {
+    if (lista == NULL) {
+        printf("NENHUM Enlace");
+    } else {
+        CelulaEnlace* p = lista -> prim;
+        printf("\n Lista de Enlaces:\n");
+        while (p != NULL) {
+            printf("Roteador: %s \n", p-> roteador -> roteador -> nome);
+            printf("Operadora: %s \n", p-> roteador -> roteador -> operadora);
+            printf("\n\n");
+            p = p->prox;
+        }
+    }
+}
+//criar outro arquivo para essas funções
 

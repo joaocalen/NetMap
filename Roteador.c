@@ -21,12 +21,6 @@
 
 // subclasse de Item
 
-struct celulaRoteador {
-    Roteador* roteador;
-    CelulaRoteador* prox;
-    CelulaEnlace* enlace;
-};
-
 ListaRoteadores* inicializaListaRoteadores() {
     ListaRoteadores* lista;
     lista = (ListaRoteadores*) malloc(sizeof (ListaRoteadores));
@@ -64,6 +58,7 @@ Roteador* retiraRoteador(ListaRoteadores* lista, char* nome) {
     Roteador* roteador = aux -> roteador;
 
     free(aux);
+    roteador -> listaEnlaces = liberaEnlaces(roteador -> listaEnlaces, roteador);
     return roteador;
 }
 
@@ -82,12 +77,9 @@ ListaRoteadores* liberaRoteadores(ListaRoteadores* lista) {
     if (lista != NULL) {
         CelulaRoteador* p = lista -> prim;
         CelulaRoteador* aux;
-
         while (p != NULL) {
             aux = p->prox;
-            printf("\nTESTE1\n");
             destroiRoteador(p->roteador);
-            printf("\nTESTE2\n");
             free(p);
             p = aux;
         }
@@ -102,13 +94,19 @@ Roteador* inicializaRoteador(char* nome, char* operadora) {
     strcpy(roteador->nome, nome);
     roteador -> operadora = (char*) malloc((strlen(operadora) + 1) * sizeof (char));
     strcpy(roteador -> operadora, operadora);
+    roteador -> listaEnlaces = inicializaListaEnlaces();
     return roteador;
 }
 
 void destroiRoteador(Roteador* roteador) {
-    free(roteador -> operadora);
-    free(roteador -> nome);
-    free(roteador);
+    if (roteador != NULL) {
+        if (roteador -> listaEnlaces != NULL) {
+            roteador -> listaEnlaces = liberaEnlaces(roteador -> listaEnlaces, roteador);
+        }
+        free(roteador -> operadora);
+        free(roteador -> nome);
+        free(roteador);
+    }
 }
 
 void imprimeRoteadores(ListaRoteadores* lista) {
@@ -122,5 +120,20 @@ void imprimeRoteadores(ListaRoteadores* lista) {
             printf("\n\n");
             p = p -> prox;
         }
+    }
+}
+
+// jogar para lista de listaEnlaces
+
+// Roteador anterior pode ser NULL, ajeitar sapoha
+void conectaRoteadores(Roteador* roteador1, Roteador* roteador2, ListaRoteadores* lista) {
+    insereEnlace(buscaRoteadorAnterior(roteador2 -> nome, lista) -> prox, roteador1 -> listaEnlaces);
+    insereEnlace(buscaRoteadorAnterior(roteador1 -> nome, lista) -> prox, roteador2 -> listaEnlaces);
+}
+
+void desconectaRoteadores(Roteador* roteador1, Roteador* roteador2) {
+    if (roteador1 != NULL && roteador2 != NULL) {
+        retiraEnlace(roteador1 -> listaEnlaces, roteador2 -> nome);
+        retiraEnlace(roteador2 -> listaEnlaces, roteador1 -> nome);
     }
 }

@@ -1,7 +1,7 @@
 Feito (base):
 Cadastra Terminal (funcionando)
 Desconecta Terminal 
-Conecta Terminal (funcionando)
-Remove Terminal
-Cadastra Roteador
-Remove Roteador
+Conecta Terminal 
+Remove Terminal (funcionando)
+Cadastra Roteador (funcionando)
+Remove Roteador (funcionando)
