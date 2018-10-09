@@ -2,17 +2,17 @@
 //#include <stdlib.h>
 //#include <string.h>
 //#include "pilha.h"
+//#include "Roteador.h"
 //#define MaxTam 10
 //
-//struct pessoa {
-//    char* nome;
-//    char* endereco;
-//    int idade;
+//struct pilha {
+//    Roteador* roteadors[MaxTam];
+//    int topo;
 //};
 //
-//struct pilha {
-//    Pessoa* pessoas[MaxTam];
-//    int topo;
+//struct celulaPilha {
+//    Roteador* roteador;
+//    CelulaPilha* prox;
 //};
 //
 //Pilha* cria_pilha() {
@@ -21,46 +21,34 @@
 //    return pilhaAlunos;
 //}
 //
-//void push(Pessoa* pessoa, Pilha* pilha) {
+//void push(Roteador* roteador, Pilha* pilha) {
 //    if (pilha -> topo < MaxTam) {
-//        pilha -> pessoas[pilha -> topo] = pessoa;
+//        pilha -> roteadors[pilha -> topo] = roteador;
 //        pilha -> topo++;
 //    }
 //}
 //
-//Pessoa* inicializaPessoa(char* nome, int idade, char* endereco) {
-//    Pessoa* pessoa = (Pessoa*) malloc(sizeof (Pessoa));
-//    pessoa -> nome = (char*) malloc(strlen(nome + 1) * sizeof (char));
-//    pessoa -> endereco = (char*) malloc(strlen(endereco + 1) * sizeof (char));
-//    strcpy(pessoa -> endereco, endereco);
-//    strcpy(pessoa -> nome, nome);
-//    pessoa -> idade = idade;
-//    return pessoa;
-//}
-//
-//Pessoa* pop(Pilha* pilha) {
+//Roteador* pop(Pilha* pilha) {
 //    if (pilha -> topo != 0) {
 //        pilha -> topo--;
-//        return (pilha -> pessoas[pilha-> topo]);
+//        return (pilha -> roteadors[pilha-> topo]);
 //    }
 //
 //}
 //
-//Pilha* destroi_pilha(Pilha* pilha){
+//Pilha* destroi_pilha(Pilha* pilha) {
 //    int i;
-//    for (i=0; i < pilha->topo;i++){
-//        free(pilha->pessoas[i]->endereco);
-//        free(pilha->pessoas[i]->nome);
-//        free(pilha->pessoas[i]);
+//    for (i = 0; i < pilha->topo; i++) {
+//        pop(pilha);
 //    }
 //    free(pilha);
 //}
 //
-//void imprime_pilha(Pilha* pilha){
+//void imprime_pilha(Pilha* pilha) {
 //    int i;
-//    for(i=0; i < pilha->topo; i++){
-//        printf("%s\n",pilha->pessoas[i]->endereco);
-//        printf("%s\n",pilha->pessoas[i]->nome);
-//        printf("%d\n\n\n",pilha->pessoas[i]->idade);
+//    for (i = 0; i < pilha->topo; i++) {
+//        printf("%s\n", pilha->roteadors[i]->endereco);
+//        printf("%s\n", pilha->roteadors[i]->nome);
+//        printf("%d\n\n\n", pilha->roteadors[i]->idade);
 //    }
 //}

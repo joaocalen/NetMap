@@ -1,49 +1,42 @@
 //#ifndef PILHA_H_
 //#define PILHA_H_
 //
-///* Define a estrutura Roteador. Contem campos:
-//  - nome (string)
-//  - operadora (string)
-//  - prox (ponteiro)
-//  - rot (ponteiro que aponta para o roteador caso esse esteja na lista de enlace).
-//  - verificado (boolean) - Indica se o nó já foi verificado na função de enviarPacotesDados
-// */
-//typedef struct Roteador roteador;
-//
 //
 ///*Tipo que define a Pilha (tipo opaco)
+//  Atencao: Esta pilha pode conter ate 10 Pessoas
 //*/
 //typedef struct pilha Pilha;
 //
+// typedef celulaPilha CelulaPilha;
 //
 ///*Inicializa a Pilha
 //* inputs: nenhum
-//* output: Pilha criada
+//* output: P (a pilha criada)
 //* pre-condicao: nenhuma
-//* pos-condicao: Pilha está definida e vazia
+//* pos-condicao: P est� definida e vazia
 //*/
 //Pilha* cria_pilha();
 //
-///*Insere uma roteador no topo da pilha
-//* inputs: P (uma pilha) e E (uma roteador)
+///*Insere uma pessoa no topo da pilha (se houver espaco)
+//* inputs: P (uma pilha) e E (uma pessoa)
 //* output: nenhum
 //* pre-condicao: P nao vazia e com espaco para o elemento.
 //* pos-condicao: Ao final da fun��o, a pilha tem E como o elemento
 //do topo
 //*/
-//void push(Roteador* roteador, Pilha* pilha);
+//void push(void* roteador, Pilha* pilha);
 //
 //
-///*Retira uma Roteador do topo da Pilha (se pilha n�o vazia)
+///*Retira uma Pessoa do topo da Pilha (se pilha n�o vazia)
 //* inputs: a Pilha
-//* output: a roteador retirada do topo da pilha
+//* output: a pessoa retirada do topo da pilha
 //* pre-condicao: Pilha n�o � nula e n�o � vazia
 //* pos-condicao: pilha n�o cont�m o elemento retirado do topo
 //*/
-//Roteador* pop(Pilha* pilha);
+//void* pop(Pilha* pilha);
 //
 //
-///*Imprime as roteadors da pilha
+///*Imprime as pessoas da pilha
 // * inputs: a pilha
 // * output: nenhum
 // * pre-condicao: pilha P n�o vazia
@@ -61,13 +54,6 @@
 //Pilha* destroi_pilha(Pilha* pilha);
 //
 //
-///*Inicializa um TipoItem Roteador
-//* inputs: o nome, a idade e o endereco da roteador
-//* output: um ponteiro para o tipo item criado
-//* pre-condicao: nome, idade e endereco validos
-//* pos-condicao: tipo item criado, com os campos nome, idade e endereco copiados
-//*/
-//Roteador* inicializaRoteador(char* nome, int idade, char* endereco);
 //
 //
 //#endif /* PILHA_H_ */

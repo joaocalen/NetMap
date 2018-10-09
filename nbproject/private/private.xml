@@ -9,10 +9,9 @@
         <group>
             <file>file:/home/joaogcalen/NetBeansProjects/NetMap/main.c</file>
             <file>file:/home/joaogcalen/NetBeansProjects/NetMap/Terminal.c</file>
-            <file>file:/home/joaogcalen/NetBeansProjects/NetMap/Roteador.h</file>
-            <file>file:/home/joaogcalen/NetBeansProjects/NetMap/Enlace.h</file>
+            <file>file:/home/joaogcalen/NetBeansProjects/NetMap/leitorArquivo.c</file>
             <file>file:/home/joaogcalen/NetBeansProjects/NetMap/Terminal.h</file>
-            <file>file:/home/joaogcalen/NetBeansProjects/NetMap/anotacoes.txt</file>
+            <file>file:/home/joaogcalen/NetBeansProjects/NetMap/leitorArquivo.h</file>
             <file>file:/home/joaogcalen/NetBeansProjects/NetMap/Enlace.c</file>
             <file>file:/home/joaogcalen/NetBeansProjects/NetMap/Roteador.c</file>
         </group>

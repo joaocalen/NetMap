@@ -14,6 +14,10 @@
 #ifndef ROTEADOR_H
 #define ROTEADOR_H
 
+#define verificado 1
+#define naoVerificado 0
+
+
 #include "Enlace.h"
 
 
@@ -40,6 +44,7 @@ extern "C" {
     struct roteador {
         char* nome;
         char* operadora;
+        int visto;
         ListaEnlaces* listaEnlaces;
     };
 
@@ -105,11 +110,16 @@ extern "C" {
 
     void destroiRoteador(Roteador* roteador);
 
-    void conectaRoteadores(Roteador* roteador1, Roteador* roteador2, ListaRoteadores* lista);
+    void conectaRot(Roteador* roteador1, Roteador* roteador2, ListaRoteadores* lista);
 
-    void desconectaRoteadores(Roteador* roteador1, Roteador* roteador2);
+    void desconectaRot(Roteador* roteador1, Roteador* roteador2);
 
+    CelulaRoteador* buscaRoteador(char* nome, ListaRoteadores* lista);
 
+    int frequenciaRoteador(char* operadora, ListaRoteadores* lista);
+
+    int procuraCaminho(Roteador* roteador1, Roteador* roteador2, ListaRoteadores* lista);
+    
 #ifdef __cplusplus
 }
 #endif

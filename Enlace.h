@@ -29,6 +29,8 @@ extern "C" {
         CelulaEnlace* prim;
         CelulaEnlace* atual;
     };
+    
+    
 
     /*Tipo que define a lista (tipo opaco)
       Estrutura interna do tipo deve ser definida na implementa��o do TAD.
@@ -86,7 +88,18 @@ extern "C" {
     ListaEnlaces* inicializaListaEnlaces();
 
     CelulaEnlace* buscaEnlaceAnterior(char* nome, ListaEnlaces* lista);
+    
+    CelulaEnlace* buscaEnlace(char* nome, ListaEnlaces* lista);
+    
+    void insereEnlaceFim(void* roteador, ListaEnlaces* lista);
+    
+    CelulaEnlace* retiraUltimoEnlace(ListaEnlaces* lista, char* nome);
 
+    int procuraEnlace1Nivel(void* roteador1, void* roteador2, void* listaRoteadores);
+    
+    int procuraEnlace(void* roteador1, void* roteador2, ListaEnlaces* caminho);
+    
+    
 
 #ifdef __cplusplus
 }

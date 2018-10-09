@@ -19,13 +19,7 @@
 #include <stdlib.h>
 //using namespace std;
 
-void conectaTerminal(Terminal* terminal, CelulaRoteador* roteador, ListaTerminais* lista);
 
-struct celulaTerminal {
-    Terminal* terminal;
-    CelulaTerminal* prox;
-    CelulaRoteador* roteador;
-};
 
 ListaTerminais* inicializaListaTerminais() {
     ListaTerminais* lista;
@@ -38,6 +32,7 @@ void insereTerminal(Terminal* terminal, ListaTerminais* lista) {
     CelulaTerminal* celulaTerminal = (CelulaTerminal*) malloc(sizeof (CelulaTerminal));
     celulaTerminal -> terminal = terminal;
     celulaTerminal -> prox = lista -> prim;
+    celulaTerminal -> roteador = NULL;
     lista -> prim = celulaTerminal;
 }
 
@@ -76,6 +71,16 @@ CelulaTerminal* buscaTerminalAnterior(char* nome, ListaTerminais* lista) {
     return ant;
 }
 
+CelulaTerminal* buscaTerminal(char* nome, ListaTerminais* lista) {
+    CelulaTerminal* aux;
+    CelulaTerminal* ant = NULL;
+    aux = lista -> prim;
+    while ((aux -> terminal -> nome != nome) && (aux != NULL)) {
+        ant = aux;
+        aux = aux -> prox;
+    }
+    return aux;
+}
 
 // retira o terminal da lista, mas não o destroi.
 
@@ -105,8 +110,25 @@ Terminal* inicializaTerminal(char* nome, char* localizacao) {
 
 // Para desconectar, basta passar o parâmetro roteador como NULL;
 
-void conectaTerminal(Terminal* terminal, CelulaRoteador* roteador, ListaTerminais* lista) {
-    (buscaTerminalAnterior(terminal -> nome, lista) -> prox) -> roteador = roteador;
+void conectaTerm(Terminal* terminal, Roteador* roteador, ListaTerminais* listaTerminais, ListaRoteadores* listaRoteadores) {
+    buscaTerminal(terminal -> nome, listaTerminais) -> roteador = buscaRoteador(roteador-> nome, listaRoteadores);
+}
+
+void desconectaTerminalRoteador(Roteador* roteador, ListaTerminais* listaTerminais) {
+    if (listaTerminais != NULL) {
+        CelulaTerminal* aux;
+        aux = listaTerminais -> prim;
+        while (aux != NULL) {
+            if (aux -> roteador != NULL) {
+                desconectaTerm(aux -> terminal, listaTerminais);
+            }
+            aux = aux -> prox;
+        }
+    }
+}
+
+void desconectaTerm(Terminal* terminal, ListaTerminais* listaTerminais) {
+    buscaTerminal(terminal -> nome, listaTerminais) -> roteador = NULL;
 }
 
 void destroiTerminal(Terminal* terminal) {
@@ -115,10 +137,10 @@ void destroiTerminal(Terminal* terminal) {
         free(terminal -> nome);
         free(terminal);
     }
+    printf("Terminal inexistente\n");
 }
 
 void imprimeTerminais(ListaTerminais* lista) {
-
     if (lista == NULL) {
         printf("NENHUM TERMINAL");
     } else {
@@ -126,11 +148,38 @@ void imprimeTerminais(ListaTerminais* lista) {
         while (p != NULL) {
             printf("Terminal: %s \n", p->terminal-> nome);
             printf("Endereco: %s \n", p->terminal->localizacao);
+            if (p-> roteador != NULL) {
+                printf("Conexão: %s \n", p-> roteador -> roteador -> nome);
+            }
             printf("\n\n");
             p = p -> prox;
         }
     }
-
 }
+
+int frequenciaTerm(char* localizacao, ListaTerminais* lista) {
+    int i = 0;
+    if (lista == NULL) {
+        printf("NENHUM TERMINAL");
+    } else {
+        CelulaTerminal* p = lista -> prim;
+        while (p != NULL) {
+            if (!strcmp(p->terminal->localizacao, localizacao)) {
+                i++;
+            }
+            p = p -> prox;
+        }
+    }
+    return i;
+}
+
+int enviarPacotes(Terminal* terminal1, Terminal* terminal2, ListaTerminais* lista, ListaRoteadores* listaRoteadores) {
+    if (lista != NULL && terminal1 != NULL && terminal2 != NULL) {
+        if (buscaTerminal(terminal1->nome, lista) ->roteador != NULL && buscaTerminal(terminal2 -> nome, lista) ->roteador != NULL)
+            return procuraCaminho(buscaTerminal(terminal1 -> nome, lista) -> roteador -> roteador, buscaTerminal(terminal2-> nome, lista) -> roteador ->roteador, listaRoteadores);
+    }
+    return 0;
+}
+
 
 

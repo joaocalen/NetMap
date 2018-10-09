@@ -14,6 +14,9 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
 
+#include "Roteador.h"
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -45,7 +48,13 @@ extern "C" {
         CelulaTerminal* prim;
     };
 
-    
+    struct celulaTerminal {
+        Terminal* terminal;
+        CelulaTerminal* prox;
+        CelulaRoteador* roteador;
+    };
+
+
 
     Terminal* retiraTerminal(ListaTerminais* lista, char* nome);
 
@@ -83,6 +92,10 @@ extern "C" {
 
     CelulaTerminal* buscaTerminalAnterior(char* nome, ListaTerminais* lista);
 
+    CelulaTerminal* buscaTerminal(char* nome, ListaTerminais* lista);
+
+    void conectaTerm(Terminal* terminal, Roteador* roteador, ListaTerminais* listaTerminais, ListaRoteadores* listaRoteadores);
+
 
 
     /*Inicializa um Terminal aluno
@@ -92,9 +105,16 @@ extern "C" {
      * pos-condicao: tipo item criado, com os campos nome, matricula e endereco copiados
      */
     Terminal * inicializaTerminal(char* nome, char* localizacao);
-    
+
     void destroiTerminal(Terminal* terminal);
 
+    int frequenciaTerm(char* localizacao, ListaTerminais* lista);
+
+    void desconectaTerminalRoteador(Roteador* roteador, ListaTerminais* listaTerminais);
+
+    void desconectaTerm(Terminal* terminal, ListaTerminais* listaTerminais);
+
+    int enviarPacotes(Terminal* terminal1, Terminal* terminal2, ListaTerminais* lista, ListaRoteadores* listaRoteadores);
 
 #ifdef __cplusplus
 }
