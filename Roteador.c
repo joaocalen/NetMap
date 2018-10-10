@@ -55,13 +55,11 @@ Roteador* retiraRoteador(ListaRoteadores* lista, char* nome) {
         aux = ant -> prox;
         ant -> prox = aux -> prox;
     }
-    if (aux != NULL) {
-        Roteador* roteador = aux -> roteador;
-        roteador -> listaEnlaces = liberaEnlaces(roteador -> listaEnlaces, roteador);
-        free(aux);
-        return roteador;
-    }
-    return NULL;
+    Roteador* roteador = aux -> roteador;
+    roteador -> listaEnlaces = liberaEnlaces(roteador -> listaEnlaces, roteador);
+    free(aux);
+    return roteador;
+
 }
 
 CelulaRoteador* buscaRoteadorAnterior(char* nome, ListaRoteadores* lista) {
@@ -120,19 +118,14 @@ void destroiRoteador(Roteador* roteador) {
         free(roteador -> operadora);
         free(roteador -> nome);
         free(roteador);
-    }
-    printf("Roteador inexistente\n");
+    }    
 }
 
 void imprimeRoteadores(ListaRoteadores* lista) {
-    if (lista == NULL) {
-        printf("NENHUM Roteador \n");
-    } else {
+    if (lista != NULL) {
         CelulaRoteador* p = lista -> prim;
         while (p != NULL) {
-            printf("Roteador: %s \n", p->roteador-> nome);
-            printf("Operadora: %s \n", p->roteador-> operadora);
-            printf("\n\n");
+            imprimeEnlaces(p->roteador->listaEnlaces, p->roteador);
             p = p -> prox;
         }
     }
@@ -179,7 +172,3 @@ int procuraCaminho(Roteador* roteador1, Roteador* roteador2, ListaRoteadores* li
 }
 
 // Seta atual para o início e muda flags para naoVerificado
-
-void resetarDados() {
-
-}

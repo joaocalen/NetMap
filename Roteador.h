@@ -25,20 +25,27 @@
 extern "C" {
 #endif
 
-    /*Terminal Aluno (tipo opaco)
-      Estrutura interna do tipo deve ser definida na implementa��o do TAD. Devem ser definidos campos:
-      - nome (string)
-      - matricula (int)
-      - endereco (string)
+    /*Roteador 
+     *   estrutura. Campos:
+     * - nome (string)
+     * - operadora (string)
+     * - visto (int)
+     * - lista de enlaces
      */
     typedef struct roteador Roteador;
 
-    /*Tipo que define a lista (tipo opaco)
-      Estrutura interna do tipo deve ser definida na implementa��o do TAD.
-      Usar lista COM Sentinela
+    /* Celula de Roteador
+     * Campos:
+     * - roteador (Ponteiro para estrutura Roteador)    
+     * - prox (Ponteiro para a próxima célula da lista)    
      */
     typedef struct celulaRoteador CelulaRoteador;
 
+    /* Lista de Roteadores
+     * Campos:
+     * - prim (Celula de Roteador)
+     * - int tam
+     */
     typedef struct listaRoteadores ListaRoteadores;
 
     struct roteador {
@@ -58,43 +65,43 @@ extern "C" {
         CelulaRoteador* prox;
     };
 
-    /*Inicializa um Terminal aluno
-     * inputs: o nome, a matricula e o endereco do aluno
-     * output: um ponteiro para o tipo item criado
-     * pre-condicao: nome, matricula e endereco validos
-     * pos-condicao: tipo item criado, com os campos nome, matricula e endereco copiados
+    /*Inicializa um Roteador
+     * inputs: o nome e a operadora do roteador
+     * output: um ponteiro para o tipo Roteador criado
+     * pre-condicao: nome e operadora validos
+     * pos-condicao: roteador criado, com os campos nome e operadora copiados
      */
     Roteador* inicializaRoteador(char* nome, char* operadora);
 
-    /*Retira um aluno de matr�cula mat da lista de alunos
-     * inputs: a lista e a matr�cula do aluno a ser retirado da lista
-     * output: o aluno (do tipo Terminal) retirado da lista ou NULL, se o aluno n�o se encontrar na lista
-     * pre-condicao: lista n�o � nula
-     * pos-condicao: lista n�o cont�m o aluno de matr�cula mat
+    /*Retira um roteador de nome (nome) da lista de roteadores
+     * inputs: a lista e o nome do roteador a ser retirado da lista
+     * output: o roteador(do tipo Roteador) retirado da lista ou NULL, se o roteador não se encontrar na lista
+     * pre-condicao: lista não nula
+     * pos-condicao: lista não contém o roteador de nome (nome)
      */
     Roteador* retiraRoteador(ListaRoteadores* lista, char* nome);
 
-    /*Libera toda a mem�ria alocada para a lista (lembre-se de tambem liberar a memoria para o aluno)
-     * inputs: a lista encadeada de alunos
+    /*Libera toda a memória alocada para a lista
+     * inputs: a lista encadeada de roteadores
      * output: Lista vazia (NULL)
-     * pre-condicao: lista n�o � nula
-     * pos-condicao: mem�ria alocada � liberada
+     * pre-condicao: lista não nula
+     * pos-condicao: memória alocada é liberada
      */
     ListaRoteadores* liberaRoteadores(ListaRoteadores* lista);
 
-    /*Imprime os dados de todos os alunos da lista
-     * inputs: a lista de alunos
+    /*Imprime os dados de todos os roteadores da lista no arquivo "saida.dot"
+     * inputs: a lista de roteadores
      * output: nenhum
-     * pre-condicao: lista n�o � nula
-     * pos-condicao: dados dos alunos impressos na saida padrao
+     * pre-condicao: lista não é nula
+     * pos-condicao: dados dos roteadores impressos na saida "saida.dot"
      */
     void imprimeRoteadores(ListaRoteadores* lista);
 
-    /*Insere um aluno na primeira posi��o da lista de alunos
-     * inputs: aluno a ser inserido na lista (do tipo Terminal) e a lista
+    /*Insere um roteador na primeira posição da lista de roteadores
+     * inputs: roteador a ser inserido na lista (do tipo Roteador) e a lista
      * output: nenhum
-     * pre-condicao: aluno e lista n�o s�o nulos
-     * pos-condicao: lista cont�m o aluno inserido na primeira posi��o
+     * pre-condicao: roteador e lista não são nulos
+     * pos-condicao: lista contém o roteador inserido na primeira posição
      */
     void insereRoteador(Roteador* item, ListaRoteadores* lista);
 
@@ -102,24 +109,62 @@ extern "C" {
      * inputs: nenhum
      * output: Sentinela inicializado
      * pre-condicao: nenhuma
-     * pos-condicao: sentinela da lista de retorno existe e os campos primeiro e ultimo apontam para NULL
+     * pos-condicao: sentinela da lista de retorno existe e o campos prim aponta para NULL
      */
     ListaRoteadores* inicializaListaRoteadores();
 
+    /*Realiza uma busca na lista de Roteadores e retorna o roteador anterior.
+     * inputs: nome do roteador e a lista de roteadores
+     * output: Celula referente ao roteador anterior;
+     * pre-condicao: lista não nula
+     * pos-condicao: nenhuma
+     */
     CelulaRoteador* buscaRoteadorAnterior(char* nome, ListaRoteadores* lista);
 
+    /* Libera espaço na memória referente ao roteador em questão
+     * inputs: roteador
+     * output: nenhum
+     * pre-condicao: roteador não nulo
+     * pos-condicao: memória liberada
+     */
     void destroiRoteador(Roteador* roteador);
 
+    /* Conecta o roteador no roteador em questão.
+     * inputs: Dois roteadores, lista de roteadores e lista de roteadores
+     * output: nenhum
+     * pre-condicao: parâmetros não nulos
+     * pos-condicao: roteador1 na lista de enlaces do roteador 2 e roteador 2 na lista de enlaces do roteador 1.
+     */
     void conectaRot(Roteador* roteador1, Roteador* roteador2, ListaRoteadores* lista);
 
+    /* Desconecta o roteador do roteador em questão.
+     * inputs: Roteador e lista de roteadores
+     * output: nenhum
+     * pre-condicao: parâmetros não nulos
+     * pos-condicao: roteador1 fora da lista de enlaces do roteador 2 e roteador 2 fora da lista de enlaces do roteador 1.
+     */
     void desconectaRot(Roteador* roteador1, Roteador* roteador2);
 
+    /*Realiza uma busca na lista de Roteadores e retorna o roteador cujo nome é (nome).
+     * inputs: nome do roteador e a lista de roteadores
+     * output: Celula referente ao roteador;
+     * pre-condicao: lista não nula
+     * pos-condicao: nenhuma
+     */
     CelulaRoteador* buscaRoteador(char* nome, ListaRoteadores* lista);
 
+    /* Calcula a frequência da operadora. Ou seja, quantos roteadores possuem a mesma operadora
+     * inputs: operadora (string) e lista de roteadores
+     * output: inteiro referente à frequência
+     * pre-condicao: lista não nula e operadora válida
+     * pos-condicao: nenhuma
+     */
     int frequenciaRoteador(char* operadora, ListaRoteadores* lista);
 
+    /* função auxiliar da função enviaPacoteDados. Apenas faz a chamada de uma nova função em "Enlace.c" para dar seguimento à função
+     */
     int procuraCaminho(Roteador* roteador1, Roteador* roteador2, ListaRoteadores* lista);
-    
+
 #ifdef __cplusplus
 }
 #endif

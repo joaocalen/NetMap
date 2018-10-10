@@ -20,12 +20,12 @@
 #include "Terminal.h"
 //#include "fila.h"
 
-ListaEnlaces* listaEnlaces;
 ListaRoteadores* listaRoteadores;
 ListaTerminais* listaTerminais;
+int intermediario;
 
 void leitor(char* nomeArquivo) {
-    listaEnlaces = inicializaListaEnlaces();
+    intermediario = 0;
     listaRoteadores = inicializaListaRoteadores();
     listaTerminais = inicializaListaTerminais();
 
@@ -167,9 +167,12 @@ void decideOperacao(char* operacao) {
     if (!strcmp(operacao, "IMPRIMENETMAP")) {
         imprimeNetMap();
     } else if ((!strcmp(operacao, "FIM"))) {
-        fechaArquivos();
+        liberaListas();
     } else {
-        editaLog(operacao);
+        FILE *log;
+        log = fopen("log.txt", "a");
+        fprintf(log, "Erro: Operação %s inexistente no NetMap", operacao);
+        fclose(log);
     }
 }
 
@@ -215,84 +218,173 @@ void decideOperacao2Termos(char* operacao, char* termo1, char* termo2) {
     free(termo2);
 }
 
-void editaLog(char* erro) {
-
-}
-
-void editaSaida() {
-
-}
-
-void fechaArquivos() {
+void liberaListas() {
     liberaRoteadores(listaRoteadores);
     liberaTerminais(listaTerminais);
+
 }
 
 void cadastraRoteador(char* nome, char* operadora) {
     insereRoteador(inicializaRoteador(nome, operadora), listaRoteadores);
-    imprimeRoteadores(listaRoteadores);
 }
 
 void cadastraTerminal(char* nome, char* localizacao) {
     insereTerminal(inicializaTerminal(nome, localizacao), listaTerminais);
-    imprimeTerminais(listaTerminais);
-
 }
 
 void removeRoteador(char* nome) {
     Roteador* roteador = retiraRoteador(listaRoteadores, nome);
-    if (roteador != NULL)
+    if (roteador != NULL) {
         destroiRoteador(roteador);
+    } else {
+        FILE *log;
+        log = fopen("log.txt", "a");
+        fprintf(log, "Erro: Roteador %s inexistente no NetMap\n\n", nome);
+        fclose(log);
+    }
 }
 
 void conectaTerminal(char* terminal, char* roteador) {
-    Terminal* terminal1 = (buscaTerminal(terminal, listaTerminais)) -> terminal;
-    Roteador* roteador1 = (buscaRoteador(roteador, listaRoteadores)) -> roteador;
-    conectaTerm(terminal1, roteador1, listaTerminais, listaRoteadores);
+    CelulaTerminal* terminal1 = (buscaTerminal(terminal, listaTerminais));
+    CelulaRoteador* roteador1 = (buscaRoteador(roteador, listaRoteadores));
+    if (terminal1 != NULL && roteador1 != NULL) {
+        conectaTerm(terminal1->terminal, roteador1->roteador, listaTerminais, listaRoteadores);
+    } else {
+        if (roteador1 == NULL) {
+            FILE *log;
+            log = fopen("log.txt", "a");
+            fprintf(log, "Erro: Roteador %s inexistente no NetMap\n\n", roteador);
+            fclose(log);
+        }
+        if (terminal1 == NULL) {
+            FILE *log;
+            log = fopen("log.txt", "a");
+            fprintf(log, "Erro: Terminal %s inexistente no NetMap\n\n", terminal);
+            fclose(log);
+        }
+    }
 }
 
 void desconectaTerminal(char* terminal) {
-    Terminal* terminal1 = buscaTerminal(terminal, listaTerminais) -> terminal;
-    desconectaTerm(terminal1, listaTerminais);
+    CelulaTerminal* terminal1 = buscaTerminal(terminal, listaTerminais);
+    if (terminal1 != NULL) {
+        desconectaTerm(terminal1->terminal, listaTerminais);
+    } else {
+        FILE *log;
+        log = fopen("log.txt", "a");
+        fprintf(log, "Erro: Terminal %s inexistente no NetMap\n\n", terminal);
+        fclose(log);
+    }
 }
 
 void removeTerminal(char* nome) {
     Terminal* terminal = retiraTerminal(listaTerminais, nome);
     destroiTerminal(terminal);
-
 }
 
-void conectaRoteadores(char* roteador1, char* roteador2) {
-    conectaRot(buscaRoteador(roteador1, listaRoteadores) -> roteador, buscaRoteador(roteador2, listaRoteadores) -> roteador, listaRoteadores);
+void conectaRoteadores(char* roteador10, char* roteador20) {
+    CelulaRoteador* roteador1 = (buscaRoteador(roteador10, listaRoteadores));
+    CelulaRoteador* roteador2 = (buscaRoteador(roteador20, listaRoteadores));
+    if (roteador1 != NULL && roteador2 != NULL) {
+        conectaRot(roteador1 -> roteador, roteador2 ->roteador, listaRoteadores);
+    } else {
+        if (roteador1 == NULL) {
+            FILE *log;
+            log = fopen("log.txt", "a");
+            fprintf(log, "Erro: Roteador %s inexistente no NetMap\n\n", roteador10);
+            fclose(log);
+        }
+        if (roteador2 == NULL) {
+            FILE *log;
+            log = fopen("log.txt", "a");
+            fprintf(log, "Erro: Roteador %s inexistente no NetMap\n\n", roteador20);
+            fclose(log);
+        }
+    }
 }
 
-void desconectaRoteadores(char* roteador1, char* roteador2) {
-    desconectaRot(buscaRoteador(roteador1, listaRoteadores) -> roteador, buscaRoteador(roteador2, listaRoteadores) ->roteador);
+void desconectaRoteadores(char* roteador10, char* roteador20) {
+    CelulaRoteador* roteador1 = (buscaRoteador(roteador10, listaRoteadores));
+    CelulaRoteador* roteador2 = (buscaRoteador(roteador20, listaRoteadores));
+    if (roteador1 != NULL && roteador2 != NULL) {
+        desconectaRot(roteador1 -> roteador, roteador2 ->roteador);
+    } else {
+        if (roteador1 == NULL) {
+            FILE *log;
+            log = fopen("log.txt", "a");
+            fprintf(log, "Erro: Roteador %s inexistente no NetMap\n\n", roteador10);
+            fclose(log);
+        }
+        if (roteador2 == NULL) {
+            FILE *log;
+            log = fopen("log.txt", "a");
+            fprintf(log, "Erro: Roteador %s inexistente no NetMap\n\n", roteador20);
+            fclose(log);
+        }
+    }
 }
 
 void frequenciaTerminal(char* localizacao) {
     FILE *saida;
     saida = fopen("saida.txt", "a");
-    fprintf(saida, "FREQUENCIATERMINAL %s: %d", localizacao, frequenciaTerm(localizacao, listaTerminais));
+    fprintf(saida, "FREQUENCIATERMINAL %s: %d\n\n", localizacao, frequenciaTerm(localizacao, listaTerminais));
     fclose(saida);
 }
 
 void frequenciaOperadora(char* operadora) {
     FILE *saida;
     saida = fopen("saida.txt", "a");
-    fprintf(saida, "FREQUENCIAOPERADORA %s: %d", operadora, frequenciaRoteador(operadora, listaRoteadores));
+    fprintf(saida, "FREQUENCIAOPERADORA %s: %d\n\n", operadora, frequenciaRoteador(operadora, listaRoteadores));
     fclose(saida);
 }
 
-void enviarPacotesDados(char* terminal1, char* terminal2) {
-    FILE *saida;
-    saida = fopen("saida.txt", "a");
-    fprintf(saida, "ENVIARPACOTESDADOS %s %s: SIM", terminal1, terminal2);
-    fclose(saida);
+void enviarPacotesDados(char* terminal10, char* terminal20) {
+    CelulaTerminal* terminal1 = buscaTerminal(terminal10, listaTerminais);
+    CelulaTerminal* terminal2 = buscaTerminal(terminal20, listaTerminais);
+    if (terminal1 != NULL && terminal2 != NULL) {
+        FILE *saida;
+        saida = fopen("saida.txt", "a");
+        fprintf(saida, "ENVIAPACOTEDADOS %s %s: ", terminal1->terminal->nome, terminal2->terminal->nome);
+        fclose(saida);
+        enviarPacotes(terminal1->terminal, terminal2->terminal, listaTerminais, listaRoteadores);
+        resetarDados();
+    } else {
+        if (terminal1 == NULL) {
+            FILE *log;
+            log = fopen("log.txt", "a");
+            fprintf(log, "Erro: Terminal %s inexistente no NetMap\n\n", terminal10);
+            fclose(log);
+        }
+        if (terminal2 == NULL) {
+            FILE *log;
+            log = fopen("log.txt", "a");
+            fprintf(log, "Erro: Terminal %s inexistente no NetMap\n\n", terminal20);
+            fclose(log);
+        }
+    }
 }
 
 void imprimeNetMap() {
+    FILE *netMap;
+    netMap = fopen("saida.dot", "a");
+    if (intermediario == 1) {
+        fprintf(netMap, "//intermediario\n\n");
+    }
+    fprintf(netMap, "strict graph {\n");
+    fclose(netMap);
     imprimeTerminais(listaTerminais);
     imprimeRoteadores(listaRoteadores);
+    netMap = fopen("saida.dot", "a");
+    fprintf(netMap, "}\n");
+    fclose(netMap);
+    intermediario = 1;
 }
 
+void resetarDados() {
+    CelulaRoteador* aux = listaRoteadores -> prim;
+    while (aux != NULL) {
+        aux -> roteador -> listaEnlaces -> atual = aux -> roteador -> listaEnlaces -> prim;
+        aux -> roteador -> visto = naoVerificado;
+        aux = aux -> prox;
+    }
+}

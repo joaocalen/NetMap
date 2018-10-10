@@ -19,8 +19,6 @@
 #include <stdlib.h>
 //using namespace std;
 
-
-
 ListaTerminais* inicializaListaTerminais() {
     ListaTerminais* lista;
     lista = (ListaTerminais*) malloc(sizeof (ListaTerminais));
@@ -64,7 +62,7 @@ CelulaTerminal* buscaTerminalAnterior(char* nome, ListaTerminais* lista) {
     CelulaTerminal* aux;
     CelulaTerminal* ant = NULL;
     aux = lista -> prim;
-    while ((aux -> terminal -> nome != nome) && (aux != NULL)) {
+    while ((aux != NULL) && (strcmp(aux -> terminal -> nome, nome))) {
         ant = aux;
         aux = aux -> prox;
     }
@@ -75,7 +73,7 @@ CelulaTerminal* buscaTerminal(char* nome, ListaTerminais* lista) {
     CelulaTerminal* aux;
     CelulaTerminal* ant = NULL;
     aux = lista -> prim;
-    while ((aux -> terminal -> nome != nome) && (aux != NULL)) {
+    while ((aux != NULL) && (strcmp(aux -> terminal -> nome, nome))) {
         ant = aux;
         aux = aux -> prox;
     }
@@ -114,7 +112,7 @@ void conectaTerm(Terminal* terminal, Roteador* roteador, ListaTerminais* listaTe
     buscaTerminal(terminal -> nome, listaTerminais) -> roteador = buscaRoteador(roteador-> nome, listaRoteadores);
 }
 
-void desconectaTerminalRoteador(Roteador* roteador, ListaTerminais* listaTerminais) {
+void desconectaTerminalRoteador(ListaTerminais* listaTerminais) {
     if (listaTerminais != NULL) {
         CelulaTerminal* aux;
         aux = listaTerminais -> prim;
@@ -137,23 +135,22 @@ void destroiTerminal(Terminal* terminal) {
         free(terminal -> nome);
         free(terminal);
     }
-    printf("Terminal inexistente\n");
 }
 
 void imprimeTerminais(ListaTerminais* lista) {
-    if (lista == NULL) {
-        printf("NENHUM TERMINAL");
-    } else {
+    if (lista != NULL) {
+        FILE *netMap;
+        netMap = fopen("saida.dot", "a");
         CelulaTerminal* p = lista -> prim;
         while (p != NULL) {
-            printf("Terminal: %s \n", p->terminal-> nome);
-            printf("Endereco: %s \n", p->terminal->localizacao);
+            fprintf(netMap, "    %s", p->terminal-> nome);
             if (p-> roteador != NULL) {
-                printf("Conexão: %s \n", p-> roteador -> roteador -> nome);
+                fprintf(netMap, " -- %s", p-> roteador -> roteador -> nome);
             }
-            printf("\n\n");
+            fprintf(netMap, ";\n");
             p = p -> prox;
         }
+        fclose(netMap);
     }
 }
 
@@ -175,9 +172,10 @@ int frequenciaTerm(char* localizacao, ListaTerminais* lista) {
 
 int enviarPacotes(Terminal* terminal1, Terminal* terminal2, ListaTerminais* lista, ListaRoteadores* listaRoteadores) {
     if (lista != NULL && terminal1 != NULL && terminal2 != NULL) {
-        if (buscaTerminal(terminal1->nome, lista) ->roteador != NULL && buscaTerminal(terminal2 -> nome, lista) ->roteador != NULL)
+        if (buscaTerminal(terminal1->nome, lista) ->roteador != NULL && buscaTerminal(terminal2 -> nome, lista) ->roteador != NULL) {
             return procuraCaminho(buscaTerminal(terminal1 -> nome, lista) -> roteador -> roteador, buscaTerminal(terminal2-> nome, lista) -> roteador ->roteador, listaRoteadores);
-    }
+        }
+    }    
     return 0;
 }
 

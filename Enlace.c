@@ -92,9 +92,8 @@ CelulaEnlace* retiraUltimoEnlace(ListaEnlaces* lista, char* nome) {
         ant -> prox = aux -> prox;
         lista -> atual = ant;
     }
-    CelulaEnlace* enlace = aux;
     free(aux);
-    return enlace;
+    return ant;
 }
 
 CelulaEnlace* buscaEnlaceAnterior(char* nome, ListaEnlaces* lista) {
@@ -140,56 +139,81 @@ ListaEnlaces* liberaEnlaces(ListaEnlaces* lista, void* rot) {
     return NULL;
 }
 
-void imprimeEnlaces(ListaEnlaces* lista) {
-    if (lista == NULL) {
-        printf("NENHUM Enlace");
-    } else {
+void imprimeEnlaces(ListaEnlaces* lista, void* roteador1) {
+    FILE *netMap;
+    netMap = fopen("saida.dot", "a");
+    Roteador* roteador = (Roteador*) roteador1;
+    if (lista != NULL) {
         CelulaEnlace* p = lista -> prim;
-        printf("\n Lista de Enlaces:\n");
         while (p != NULL) {
-            printf("Roteador: %s \n", p-> roteador -> roteador -> nome);
-            printf("Operadora: %s \n", p-> roteador -> roteador -> operadora);
-            printf("\n\n");
+            fprintf(netMap, "    %s -- %s;\n", roteador -> nome, p-> roteador -> roteador -> nome);
             p = p->prox;
         }
+    } else {
+        fprintf(netMap, "    %s;\n", roteador -> nome);
     }
+    fclose(netMap);
 }
 
-int procuraEnlace1Nivel(void* roteador1, void* roteador2, void* lista) {
-    CelulaRoteador* celulaRoteador = buscaRoteador(((Roteador*) roteador1)->nome, (ListaRoteadores*) lista);
+int procuraEnlace1Nivel(void* roteador10, void* roteador20, void* lista) {
+    Roteador* roteador1 = ((Roteador*) roteador10);
+    Roteador* roteador2 = ((Roteador*) roteador20);
+    ListaRoteadores* listaRoteadores = (ListaRoteadores*) lista;
+    CelulaRoteador* celulaRoteador = buscaRoteador(roteador1 -> nome, listaRoteadores);
     ListaEnlaces* caminho = inicializaListaEnlaces();
     insereEnlaceFim(celulaRoteador, caminho);
-    ((Roteador*) roteador1) -> visto = verificado;
-    return procuraEnlace(((Roteador*) roteador1), ((Roteador*) roteador2), caminho);
+    printf("Origem: %s   Destino: %s", roteador1->nome, roteador2->nome);
+    return procuraEnlace(roteador1, roteador1, roteador2, caminho);
 }
 
-int procuraEnlace(void* roteador10, void* roteador20, ListaEnlaces* caminho) {
-    Roteador* roteador2 = ((Roteador*) roteador20);
-    Roteador* roteador1 = ((Roteador*) roteador10);
+int procuraEnlace(void* roteadorInicio, void* roteadorAtual, void* roteadorFim, ListaEnlaces* caminho) {
+    Roteador* roteador3 = ((Roteador*) roteadorInicio);
+    Roteador* roteador2 = ((Roteador*) roteadorFim);
+    Roteador* roteador1 = ((Roteador*) roteadorAtual);
+    roteador3 ->visto = verificado;
     if (roteador2 -> listaEnlaces != NULL && caminho != NULL) {
         CelulaEnlace* aux;
-        if (caminho -> atual -> roteador -> roteador -> listaEnlaces != NULL) {
+        if (roteador1 -> listaEnlaces != NULL) {
+            printf("\nSE TO AQUI É PQ EXISTE ENLACES NO ROTEADOR %s\n", roteador1->nome);
             aux = roteador1 -> listaEnlaces -> atual;
         }
         // pode dar sg fault
         while (aux != NULL && aux -> roteador -> roteador != roteador2 && aux -> roteador -> roteador -> visto == verificado) {
             aux = aux -> prox;
         }
-        if (aux == NULL && caminho -> atual == caminho -> prim) {
+        if (aux == NULL && !strcmp(roteador1->nome, roteador3->nome)) {
+            //printf("\nJA OLHOU TODOS OS RAMOS E NAO ENCONTROU\n");
+            FILE *saida;
+            saida = fopen("saida.txt", "a");
+            fprintf(saida, "NAO\n\n");
+            fclose(saida);
+            free(caminho);
             return 0;
         } else if (aux == NULL) {
-            retiraUltimoEnlace(caminho, caminho -> atual -> roteador -> roteador -> nome);
-            caminho -> atual -> roteador -> roteador -> listaEnlaces -> atual = caminho -> atual -> roteador -> roteador -> listaEnlaces -> atual -> prox;
-            procuraEnlace(caminho-> atual-> roteador-> roteador, roteador2, caminho);
-        } else if (aux -> roteador -> roteador -> visto != verificado) {
-            insereEnlaceFim(aux -> roteador -> roteador, caminho);
-            aux ->roteador->roteador->visto = verificado;
-            procuraEnlace(caminho -> atual -> roteador -> roteador, roteador2, caminho);
-        } else if (aux -> roteador -> roteador == roteador2) {
+            //printf("\nJA OLHOU TODOS OS ENLACES DO ROTEADOR %s\n", roteador1->nome);
+            Roteador* ant = retiraUltimoEnlace(caminho, roteador1->nome)->roteador->roteador;
+            ant -> listaEnlaces -> atual = ant -> listaEnlaces -> atual -> prox;
+            procuraEnlace(roteador3, caminho->atual->roteador->roteador, roteador2, caminho);
+            //            if (ant == NULL) {
+            //                procuraEnlace(roteador3, ant, roteador2, caminho);
+            //            } else {
+            //                procuraEnlace(roteador3, ant, roteador2, caminho);
+            //            }
+        } else if (!strcmp(aux -> roteador -> roteador ->nome, roteador2->nome)) {
+            //printf("SÓ SUCESSO\n");
+            FILE *saida;
+            saida = fopen("saida.txt", "a");
+            fprintf(saida, "SIM\n\n");
+            fclose(saida);
+            free(caminho);
             return 1;
+        } else if (aux -> roteador -> roteador -> visto != verificado) {
+            //printf("Inserindo Enlace \n");
+            insereEnlaceFim(aux -> roteador, caminho);
+            aux -> roteador-> roteador-> visto = verificado;
+            procuraEnlace(roteador3, aux ->roteador ->roteador, roteador2, caminho);
         }
     }
-    return 0;
 }
 //criar outro arquivo para essas funções
 

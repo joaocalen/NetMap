@@ -22,60 +22,47 @@ extern "C" {
 #endif
     typedef struct celulaEnlace CelulaEnlace;
 
+    /*Tipo que define a lista 
+     Lista de Enlaces. Campos
+     * - prim (ponteiro de Celula de Enlace)
+     * - atual (ponteiro de Celula de Enlace)
+     */
     typedef struct listaEnlaces ListaEnlaces;
-
 
     struct listaEnlaces {
         CelulaEnlace* prim;
         CelulaEnlace* atual;
     };
-    
-    
 
-    /*Tipo que define a lista (tipo opaco)
-      Estrutura interna do tipo deve ser definida na implementa��o do TAD.
-      Usar lista COM Sentinela
-     */
-
-    /*Inicializa um Terminal aluno
-     * inputs: o nome, a matricula e o endereco do aluno
-     * output: um ponteiro para o tipo item criado
-     * pre-condicao: nome, matricula e endereco validos
-     * pos-condicao: tipo item criado, com os campos nome, matricula e endereco copiados
-     */
-    //CelulaEnlace* inicializaEnlace(CelulaRoteador* roteador);
-
-
-
-    /*Retira um aluno de matr�cula mat da lista de alunos
-     * inputs: a lista e a matr�cula do aluno a ser retirado da lista
-     * output: o aluno (do tipo Terminal) retirado da lista ou NULL, se o aluno n�o se encontrar na lista
-     * pre-condicao: lista n�o � nula
-     * pos-condicao: lista n�o cont�m o aluno de matr�cula mat
+    /*Retira um roteador da lista de enlaces
+     * inputs: a lista e o nome do roteador a ser retirado da lista
+     * output: o roteador (do tipo Roteador) retirado da lista ou NULL, se o roteador não se encontrar na lista
+     * pre-condicao: lista não nula
+     * pos-condicao: lista não contém o roteador de nome (nome)
      */
     CelulaEnlace* retiraEnlace(ListaEnlaces* lista, char* nome);
 
-    /*Libera toda a mem�ria alocada para a lista (lembre-se de tambem liberar a memoria para o aluno)
-     * inputs: a lista encadeada de alunos
+    /*Libera toda a memória alocada para a lista
+     * inputs: a lista encadeada de enlaces
      * output: Lista vazia (NULL)
-     * pre-condicao: lista n�o � nula
-     * pos-condicao: mem�ria alocada � liberada
+     * pre-condicao: lista não nula
+     * pos-condicao: memória alocada é liberada
      */
     ListaEnlaces* liberaEnlaces(ListaEnlaces* lista, void* roteador);
 
-    /*Imprime os dados de todos os alunos da lista
-     * inputs: a lista de alunos
+    /*Imprime os dados de todos os enlaces da lista no arquivo "saida.dot"
+     * inputs: a lista de enlaces
      * output: nenhum
-     * pre-condicao: lista n�o � nula
-     * pos-condicao: dados dos alunos impressos na saida padrao
+     * pre-condicao: lista não é nula
+     * pos-condicao: dados dos enlaces impressos na saida "saida.dot"
      */
-    void imprimeEnlaces(ListaEnlaces* lista);
+    void imprimeEnlaces(ListaEnlaces* lista, void* roteador);
 
-    /*Insere um aluno na primeira posi��o da lista de alunos
-     * inputs: aluno a ser inserido na lista (do tipo Terminal) e a lista
+    /*Insere um roteador na primeira posição da lista de enlaces
+     * inputs: roteador a ser inserido na lista (do tipo Roteador) e a lista
      * output: nenhum
-     * pre-condicao: aluno e lista n�o s�o nulos
-     * pos-condicao: lista cont�m o aluno inserido na primeira posi��o
+     * pre-condicao: roteador e lista não são nulos
+     * pos-condicao: lista contém o roteador inserido na primeira posição
      */
     void insereEnlace(void* roteador, ListaEnlaces* lista);
 
@@ -83,23 +70,53 @@ extern "C" {
      * inputs: nenhum
      * output: Sentinela inicializado
      * pre-condicao: nenhuma
-     * pos-condicao: sentinela da lista de retorno existe e os campos primeiro e ultimo apontam para NULL
+     * pos-condicao: sentinela da lista de retorno existe e o campo prim aponta para NULL
      */
     ListaEnlaces* inicializaListaEnlaces();
 
+    /*Realiza uma busca na lista de enlaces e retorna o enlace anterior.
+     * inputs: nome do roteador e a lista de enlaces
+     * output: Celula referente ao enlace anterior;
+     * pre-condicao: lista não nula
+     * pos-condicao: nenhuma
+     */
     CelulaEnlace* buscaEnlaceAnterior(char* nome, ListaEnlaces* lista);
-    
+
+    /*Realiza uma busca na lista de Roteadores e retorna o enlace cujo nome é (nome).
+     * inputs: nome do roteador e a lista de enlaces
+     * output: Celula referente ao roteador;
+     * pre-condicao: lista não nula
+     * pos-condicao: nenhuma
+     */
     CelulaEnlace* buscaEnlace(char* nome, ListaEnlaces* lista);
-    
+
+    /*Insere um roteador na última posição da lista de enlaces
+     * inputs: roteador a ser inserido na lista (do tipo Roteador) e a lista
+     * output: nenhum
+     * pre-condicao: roteador e lista não são nulos
+     * pos-condicao: lista contém o roteador inserido na última posição
+     */
     void insereEnlaceFim(void* roteador, ListaEnlaces* lista);
-    
+
+    /*Retira o último roteador da lista de enlaces
+     * inputs: a lista e o nome do roteador a ser retirado da lista
+     * output: o roteador (do tipo Roteador) retirado da lista ou NULL, se o roteador não se encontrar na lista
+     * pre-condicao: lista não nula
+     * pos-condicao: lista não contém o último roteador
+     */
     CelulaEnlace* retiraUltimoEnlace(ListaEnlaces* lista, char* nome);
 
+    /*Inicia uma pilha (listaEnlaces), insere o roteador de origem na pilha e chama a função procuraEnlace*/
     int procuraEnlace1Nivel(void* roteador1, void* roteador2, void* listaRoteadores);
-    
-    int procuraEnlace(void* roteador1, void* roteador2, ListaEnlaces* caminho);
-    
-    
+
+    /*Função com chamadas recursivas. Verifica o roteador da lista de enlaces do ultimo roteador da pilha, caso ainda não tenha sido verificado, insere na lista. Faz isso até o
+     * último elemento da pilha ter todos os roteadores da lista de enlaces veriricados. Caso isso aconteça, volta um caminho e avança um roteador da lista de enlaces do anterior, até
+     * o roteador de origem ser econtrado. Caso não seja, escreve no "saida.txt" que não é possível a comunicação entre os dois terminais da função enviaPacotesDados. Caso seja possível,
+     * escreve no "saida.txt" que a comunicação entre os terminais é possível. 
+     */
+    int procuraEnlace(void*roteadorInicio, void* roteadorAtual, void* roteadorFim, ListaEnlaces* caminho);
+
+
 
 #ifdef __cplusplus
 }

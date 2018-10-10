@@ -18,14 +18,11 @@
 #include "Terminal.h"
 #include "Enlace.h"
 #include "leitorArquivo.h"
-//#include "pilha.h"
-//#include "leitorArquivo.h"
-//#include "fila.h"
 //
 ///*
 // * 
 // */
-char* rtrim(char* string, char junk);
+
 int main(int argc, char *argv[]) {
     //    printf("TESTE 1 \n\n");
     //
@@ -55,7 +52,7 @@ int main(int argc, char *argv[]) {
     //    Roteador* roteador4 = inicializaRoteador("Roteador 4", "GVT");
     //    Roteador* roteador5 = inicializaRoteador("Roteador 5", "NET");
     //
-    //    printf("\nATÉ AQUI EU CHEGO SEU FILHO DA PUTA \n");
+    //    
     //
     //    insereRoteador(roteador1, listaRoteadores);
     //    insereRoteador(roteador2, listaRoteadores);
@@ -65,27 +62,27 @@ int main(int argc, char *argv[]) {
     //
     //    imprimeRoteadores(listaRoteadores);
     //
-    //    printf("\nTAMO AQUI NA ATIVIDADE SEU INUTIL\n");
+    //    
     //
-    //    conectaRoteadores(roteador1, roteador5, listaRoteadores);
-    //    conectaRoteadores(roteador1, roteador3, listaRoteadores);
-    //    conectaRoteadores(roteador2, roteador4, listaRoteadores);
-    //    conectaRoteadores(roteador2, roteador3, listaRoteadores);
-    //    conectaRoteadores(roteador4, roteador5, listaRoteadores);
+    //    conectaRot(roteador1, roteador5, listaRoteadores);
+    //    conectaRot(roteador1, roteador3, listaRoteadores);
+    //    conectaRot(roteador2, roteador4, listaRoteadores);
+    //    conectaRot(roteador2, roteador3, listaRoteadores);
+    //    conectaRot(roteador4, roteador5, listaRoteadores);
     //
-    //    conectaTerminal(terminal3, roteador4, listaTerminais, listaRoteadores);
-    //    conectaTerminal(terminal2, roteador2, listaTerminais, listaRoteadores);
+    //    conectaTerm(terminal3, roteador4, listaTerminais, listaRoteadores);
+    //    conectaTerm(terminal2, roteador1, listaTerminais, listaRoteadores);
     //
-    //    imprimeTerminais(listaTerminais);
+    //    //imprimeTerminais(listaTerminais);
     //
     //
-    //    imprimeEnlaces(roteador2 ->listaEnlaces);
-    //    imprimeEnlaces(roteador1 ->listaEnlaces);
+    //    //imprimeEnlaces(roteador2 ->listaEnlaces);
+    //    //imprimeEnlaces(roteador1 ->listaEnlaces);
     //
     //    printf("\nFrequencia NET: %i\n", frequenciaRoteador("NET", listaRoteadores));
-    //    printf("\nFrequencia Iconha: %i\n", frequenciaTerminal("Iconha", listaTerminais));
+    //    printf("\nFrequencia Iconha: %i\n", frequenciaTerm("Iconha", listaTerminais));
     //
-    //    //printf("\nDados: %i\n", enviarPacotesDados(terminal3, terminal2, listaTerminais, listaRoteadores));
+    //    printf("\nDados: %i\n", enviarPacotes(terminal3, terminal2, listaTerminais, listaRoteadores));
     //
     //
     //    Roteador* roteadorLiberado = retiraRoteador(listaRoteadores, roteador4 -> nome);
@@ -94,37 +91,34 @@ int main(int argc, char *argv[]) {
     //    desconectaTerminalRoteador(roteadorLiberado, listaTerminais);
     //
     //
-    //    imprimeEnlaces(roteador2 ->listaEnlaces);
-    //    imprimeEnlaces(roteador4 ->listaEnlaces);
+    //    //imprimeEnlaces(roteador2 ->listaEnlaces);
+    //    //imprimeEnlaces(roteador4 ->listaEnlaces);
     //
     //    Terminal* terminalLiberado = retiraTerminal(listaTerminais, terminal5 -> nome);
     //
     //    destroiTerminal(terminalLiberado);
     //
-    //    imprimeTerminais(listaTerminais);
+    //    //imprimeTerminais(listaTerminais);
     //    listaTerminais = liberaTerminais(listaTerminais);
     //
     //
     //    printf("LIBERANDO Roteadores:\n");
     //    destroiRoteador(roteadorLiberado);
     //    listaRoteadores = liberaRoteadores(listaRoteadores);
-    //
-    //
-    //
-    //
-    //
-    //    imprimeRoteadores(listaRoteadores);
-    //
-    //    //liberaRoteadores(listaRoteadores);
-    //    //liberaTerminais(listaTerminais);
-    //
-    //
-    //
 
-    //printf("%s",argv[argc-1]);
-    
-    
-    //printf(rtrim("    asfqepfjqpiej    ",' '));
+
+
+
+
+    //imprimeRoteadores(listaRoteadores);
+
+    //liberaRoteadores(listaRoteadores);
+    //liberaTerminais(listaTerminais);
+
+
+
+
+    //printf("%s", argv[argc - 1]);
 
     leitor(argv[argc - 1]);
 
