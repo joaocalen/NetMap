@@ -4,12 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
- * File:   Enlace.h
- * Author: joaogcalen
- *
- * Created on 4 de Outubro de 2018, 21:42
- */
+
 
 #ifndef ENLACE_H
 #define ENLACE_H

@@ -4,12 +4,6 @@
  * and open the template in the editor.
  */
 
-/* 
- * File:   Terminal.h
- * Author: joaogcalen
- *
- * Created on 4 de Outubro de 2018, 21:42
- */
 
 #ifndef TERMINAL_H
 #define TERMINAL_H

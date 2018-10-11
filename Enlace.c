@@ -4,12 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
- * File:   listaEnlace.c
- * Author: 2018103815
- *
- * Created on 30 de Agosto de 2018, 09:21
- */
+
 
 //#include <cstdlib>
 #include "Enlace.h"
@@ -47,10 +42,12 @@ void insereEnlaceFim(void* roteador, ListaEnlaces* lista) {
     if (lista == NULL || lista -> atual == NULL) {
         celulaEnlace -> prox = NULL;
         lista -> atual = lista -> prim = celulaEnlace;
+        printf("TROXINHA\n");
     } else {
         celulaEnlace -> prox = NULL;
         lista -> atual -> prox = celulaEnlace;
         lista -> atual = lista -> atual -> prox;
+        printf("TROXAO\n");
     }
 }
 
@@ -77,23 +74,26 @@ CelulaEnlace* retiraEnlace(ListaEnlaces* lista, char* nome) {
 }
 
 CelulaEnlace* retiraUltimoEnlace(ListaEnlaces* lista, char* nome) {
-    CelulaEnlace* aux;
-    CelulaEnlace* ant;
-    ant = buscaEnlaceAnterior(nome, lista);
-    if (lista -> prim == NULL) {
-        return NULL;
-    } else if (lista -> prim = lista -> atual) {
-        aux = lista -> prim;
-        lista -> prim = NULL;
-    } else if (ant -> prox == NULL) {
-        return NULL;
-    } else {
-        aux = ant -> prox;
-        ant -> prox = aux -> prox;
-        lista -> atual = ant;
+    if (lista != NULL) {
+        CelulaEnlace* aux;
+        CelulaEnlace* ant;
+        ant = buscaEnlaceAnterior(nome, lista);
+        if (lista -> prim == NULL) {
+            return NULL;
+        } else if (lista -> prim == lista -> atual) {
+            aux = lista -> prim;
+            lista -> prim = NULL;
+        } else if (ant -> prox == NULL) {
+            return NULL;
+        } else {
+            aux = ant -> prox;
+            ant -> prox = aux -> prox;
+            lista -> atual = ant;
+        }
+        free(aux);
+        return ant;
     }
-    free(aux);
-    return ant;
+    return NULL;
 }
 
 CelulaEnlace* buscaEnlaceAnterior(char* nome, ListaEnlaces* lista) {
@@ -125,13 +125,22 @@ CelulaEnlace* buscaEnlace(char* nome, ListaEnlaces* lista) {
 }
 
 ListaEnlaces* liberaEnlaces(ListaEnlaces* lista, void* rot) {
-    if (lista != NULL) {
+    if (lista != NULL && rot != NULL) {
         CelulaEnlace* p = lista -> prim;
         CelulaEnlace* aux;
         Roteador* roteador = (Roteador*) rot;
         while (p != NULL) {
             aux = p->prox;
             desconectaRot(roteador, p->roteador -> roteador);
+            p = aux;
+        }
+        free(lista);
+    } else if (rot == NULL) {
+        CelulaEnlace* p = lista -> prim;
+        CelulaEnlace* aux;
+        while (p != NULL) {
+            aux = p->prox;
+            free(p);
             p = aux;
         }
         free(lista);
@@ -162,7 +171,6 @@ int procuraEnlace1Nivel(void* roteador10, void* roteador20, void* lista) {
     CelulaRoteador* celulaRoteador = buscaRoteador(roteador1 -> nome, listaRoteadores);
     ListaEnlaces* caminho = inicializaListaEnlaces();
     insereEnlaceFim(celulaRoteador, caminho);
-    printf("Origem: %s   Destino: %s", roteador1->nome, roteador2->nome);
     return procuraEnlace(roteador1, roteador1, roteador2, caminho);
 }
 
@@ -170,47 +178,40 @@ int procuraEnlace(void* roteadorInicio, void* roteadorAtual, void* roteadorFim, 
     Roteador* roteador3 = ((Roteador*) roteadorInicio);
     Roteador* roteador2 = ((Roteador*) roteadorFim);
     Roteador* roteador1 = ((Roteador*) roteadorAtual);
-    roteador3 ->visto = verificado;
+    roteador3 -> visto = verificado;
+    roteador1 -> visto = verificado;
+    
     if (roteador2 -> listaEnlaces != NULL && caminho != NULL) {
         CelulaEnlace* aux;
         if (roteador1 -> listaEnlaces != NULL) {
-            printf("\nSE TO AQUI É PQ EXISTE ENLACES NO ROTEADOR %s\n", roteador1->nome);
             aux = roteador1 -> listaEnlaces -> atual;
         }
-        // pode dar sg fault
+    
         while (aux != NULL && aux -> roteador -> roteador != roteador2 && aux -> roteador -> roteador -> visto == verificado) {
             aux = aux -> prox;
         }
         if (aux == NULL && !strcmp(roteador1->nome, roteador3->nome)) {
-            //printf("\nJA OLHOU TODOS OS RAMOS E NAO ENCONTROU\n");
+    
             FILE *saida;
             saida = fopen("saida.txt", "a");
             fprintf(saida, "NAO\n\n");
             fclose(saida);
-            free(caminho);
+            liberaEnlaces(caminho, NULL);
             return 0;
         } else if (aux == NULL) {
-            //printf("\nJA OLHOU TODOS OS ENLACES DO ROTEADOR %s\n", roteador1->nome);
             Roteador* ant = retiraUltimoEnlace(caminho, roteador1->nome)->roteador->roteador;
-            ant -> listaEnlaces -> atual = ant -> listaEnlaces -> atual -> prox;
-            procuraEnlace(roteador3, caminho->atual->roteador->roteador, roteador2, caminho);
-            //            if (ant == NULL) {
-            //                procuraEnlace(roteador3, ant, roteador2, caminho);
-            //            } else {
-            //                procuraEnlace(roteador3, ant, roteador2, caminho);
-            //            }
+            procuraEnlace(roteador3, ant, roteador2, caminho);            
         } else if (!strcmp(aux -> roteador -> roteador ->nome, roteador2->nome)) {
-            //printf("SÓ SUCESSO\n");
             FILE *saida;
             saida = fopen("saida.txt", "a");
             fprintf(saida, "SIM\n\n");
             fclose(saida);
-            free(caminho);
+            liberaEnlaces(caminho, NULL);
             return 1;
         } else if (aux -> roteador -> roteador -> visto != verificado) {
-            //printf("Inserindo Enlace \n");
             insereEnlaceFim(aux -> roteador, caminho);
             aux -> roteador-> roteador-> visto = verificado;
+            roteador1 -> listaEnlaces -> atual = aux;
             procuraEnlace(roteador3, aux ->roteador ->roteador, roteador2, caminho);
         }
     }

@@ -4,12 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
- * File:   leitorArquivo.c
- * Author: joaogcalen
- *
- * Created on 20 de Setembro de 2018, 23:59
- */
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,8 +30,9 @@ void leitor(char* nomeArquivo) {
     if (entrada == NULL) {
         FILE *log;
         log = fopen("log.txt", "a");
-        fprintf(log, "ERRO: ARQUIVO NÃO ENCONTRADO");
-        fclose(entrada);
+        fprintf(log, "Erro: I/O, nao foi possivel abrir o arquivo %s", nomeArquivo);
+        fclose(log);
+        liberaListas();
         exit(0);
     }
 
@@ -72,7 +68,6 @@ void separaStrings(char* string) {
     int i = 0;
     int j = 0;
     int tam = strlen(string);
-    //printf("%d", tam);
     while (i < tam) {
         while (string[i] != '\n' && i != tam) {
             i++;
@@ -80,9 +75,7 @@ void separaStrings(char* string) {
         contaEspacos(substring(string, j, i));
         i++;
         j = i;
-        //printf("%d", i);
     }
-    // printf("%d", i);
 }
 
 char* substring(char str[], int inicio, int fim) {
@@ -221,7 +214,6 @@ void decideOperacao2Termos(char* operacao, char* termo1, char* termo2) {
 void liberaListas() {
     liberaRoteadores(listaRoteadores);
     liberaTerminais(listaTerminais);
-
 }
 
 void cadastraRoteador(char* nome, char* operadora) {
@@ -235,6 +227,15 @@ void cadastraTerminal(char* nome, char* localizacao) {
 void removeRoteador(char* nome) {
     Roteador* roteador = retiraRoteador(listaRoteadores, nome);
     if (roteador != NULL) {
+        if (listaTerminais != NULL) {
+            CelulaTerminal* aux = listaTerminais -> prim;
+            while (aux != NULL) {
+                if (!strcmp(aux -> roteador -> roteador ->nome, nome)) {
+                    desconectaTerminal(aux -> terminal ->nome);
+                }
+                aux = aux -> prox;
+            }
+        }
         destroiRoteador(roteador);
     } else {
         FILE *log;
@@ -345,9 +346,14 @@ void enviarPacotesDados(char* terminal10, char* terminal20) {
         FILE *saida;
         saida = fopen("saida.txt", "a");
         fprintf(saida, "ENVIAPACOTEDADOS %s %s: ", terminal1->terminal->nome, terminal2->terminal->nome);
-        fclose(saida);
-        enviarPacotes(terminal1->terminal, terminal2->terminal, listaTerminais, listaRoteadores);
-        resetarDados();
+        if (terminal1 -> roteador == NULL || terminal2 -> roteador == NULL) {
+            fprintf(saida, "NAO\n\n");
+            fclose(saida);
+        } else {
+            fclose(saida);
+            enviarPacotes(terminal1->terminal, terminal2->terminal, listaTerminais, listaRoteadores);
+            resetarDados();
+        }
     } else {
         if (terminal1 == NULL) {
             FILE *log;

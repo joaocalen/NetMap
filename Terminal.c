@@ -4,12 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
- * File:   listaTerminal.c
- * Author: 2018103815
- *
- * Created on 30 de Agosto de 2018, 09:21
- */
+
 
 //#include <cstdlib>
 #include "Terminal.h"
@@ -156,8 +151,7 @@ void imprimeTerminais(ListaTerminais* lista) {
 
 int frequenciaTerm(char* localizacao, ListaTerminais* lista) {
     int i = 0;
-    if (lista == NULL) {
-        printf("NENHUM TERMINAL");
+    if (lista == NULL) {        
     } else {
         CelulaTerminal* p = lista -> prim;
         while (p != NULL) {

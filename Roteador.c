@@ -4,12 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
- * File:   listaRoteador.c
- * Author: 2018103815
- *
- * Created on 30 de Agosto de 2018, 09:21
- */
+
 
 //#include <cstdlib>
 #include "Roteador.h"
@@ -55,7 +50,7 @@ Roteador* retiraRoteador(ListaRoteadores* lista, char* nome) {
         aux = ant -> prox;
         ant -> prox = aux -> prox;
     }
-    Roteador* roteador = aux -> roteador;
+    Roteador* roteador = aux -> roteador;    
     roteador -> listaEnlaces = liberaEnlaces(roteador -> listaEnlaces, roteador);
     free(aux);
     return roteador;
@@ -152,7 +147,7 @@ void desconectaRot(Roteador* roteador1, Roteador* roteador2) {
 int frequenciaRoteador(char* operadora, ListaRoteadores* lista) {
     int i = 0;
     if (lista == NULL) {
-        printf("NENHUM ROTEADOR");
+        
     } else {
         CelulaRoteador* p = lista -> prim;
         while (p != NULL) {
